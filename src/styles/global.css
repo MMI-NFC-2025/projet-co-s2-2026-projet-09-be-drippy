@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-bleu-marine: #24305e;
+  --color-bleu-fonce: #374785;
+  --color-bleu-claire: #a8d0e6;
+  --color-rouge: #f76c6c;
+  --color-jaune: #f8e9a1;
+  
+  --font-body: "DM Sans", sans-serif;
+  --font-display: "DM Sans", sans-serif;
+
+  --text-titre-lg: 40px;
+  --text-titre-md: 36px;
+  --text-corp-xl: 20px;
+  --text-corp-lg: 16px;
+  --text-corp-md: 13px;
+
+  --my-grid: 12;
+}
+
+@layer base {
+  body {
+    @apply bg-bleu-marine text-jaune font-body antialiased;
+  }
+
+  .font-display {
+    font-family: 'DM Sans', sans-serif !important;
+    @apply font-bold uppercase tracking-tight; 
+  }
+}
+
+@layer components {
+  .grille {
+    @apply px-6 mx-auto w-full max-w-[1600px];
+    @apply lg:grid lg:grid-cols-(--my-grid) lg:gap-8;
+  }
+
+  .col-full {
+    grid-column: 1 / -1;
+  }
+}

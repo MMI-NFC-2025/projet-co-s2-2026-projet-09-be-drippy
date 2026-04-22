@@ -1,0 +1,37 @@
+---
+/* src/components/HeaderL.astro */
+---
+<div class="fixed top-6 left-0 right-0 z-50 px-6 mx-auto w-full max-w-[1400px] pointer-events-none">
+  
+  <header class="bg-bleu-marine rounded-full shadow-2xl px-10 py-4 flex items-center justify-between pointer-events-auto border border-white/10">
+    
+    <div class="flex-1 flex items-center">
+      <a href="/" class="inline-block hover:opacity-80 transition-opacity mt-1">
+        <img src="/logo.svg" alt="Logo" class="h-9 w-auto max-w-none" />
+      </a>
+    </div>
+
+    <nav class="hidden lg:flex flex-[2] justify-center items-center gap-12">
+      <a href="#apropos" class="font-display text-white uppercase text-sm tracking-wider hover:text-jaune transition-colors whitespace-nowrap">
+        À propos
+      </a>
+      <a href="#faq" class="font-display text-white uppercase text-sm tracking-wider hover:text-jaune transition-colors whitespace-nowrap">
+        FAQ
+      </a>
+      <a href="#contact" class="font-display text-white uppercase text-sm tracking-wider hover:text-jaune transition-colors whitespace-nowrap">
+        Contact
+      </a>
+    </nav>
+
+    <div class="flex-1 flex justify-end items-center gap-6 shrink-0">
+      <a href="/login" class="font-display text-white uppercase text-sm tracking-wider px-6 py-2.5 rounded-full border border-white hover:bg-white hover:text-bleu-marine transition-all whitespace-nowrap">
+        Se connecter
+      </a>
+      
+      <a href="/register" class="bg-jaune text-bleu-marine font-display uppercase text-sm tracking-wider px-8 py-2.5 rounded-full hover:scale-105 transition-transform shadow-lg whitespace-nowrap">
+        Créer un compte
+      </a>
+    </div>
+
+  </header>
+</div>
