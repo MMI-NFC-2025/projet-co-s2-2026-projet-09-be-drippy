@@ -22,7 +22,7 @@
 
 @layer base {
   body {
-    @apply bg-bleu-marine text-jaune font-body antialiased;
+    @apply bg-white text-bleu-marine font-body antialiased;
   }
 
   .font-display {
