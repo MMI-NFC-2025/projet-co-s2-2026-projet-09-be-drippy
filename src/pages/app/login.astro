@@ -1,0 +1,104 @@
+---
+/* src/pages/app/login.astro */
+import AppLayout from '../../layouts/AppLayout.astro';
+import { login } from '../../../backend/auth.js';
+
+let error = "";
+
+if (Astro.request.method === "POST") {
+  const data = await Astro.request.formData();
+  const email = data.get("email")?.toString() || "";
+  const password = data.get("password")?.toString() || "";
+
+  try {
+    await login(email, password);
+    return Astro.redirect('/app/dashboard'); // Redirection après succès
+  } catch (e) {
+    error = "Email ou mot de passe incorrect.";
+  }
+}
+---
+
+<AppLayout title="Connexion">
+  
+  <div class="fixed inset-0 z-50 bg-[#A6C4D9] flex flex-col items-center justify-end lg:justify-center overflow-hidden">
+    
+    <!-- Logo Be Drippy (Visible uniquement sur mobile, flottant dans le fond bleu clair) -->
+    <div class="absolute top-10 w-full flex justify-center lg:hidden z-0 pointer-events-none">
+      <img src="/logo.svg" alt="Logo Be Drippy" class="w-48 drop-shadow-md" />
+    </div>
+
+    <!-- Conteneur principal (La carte Responsive) -->
+    <div class="w-full md:max-w-md lg:max-w-5xl h-[85vh] lg:h-[600px] flex flex-col lg:flex-row relative lg:bg-bleu-marine lg:rounded-[3rem] lg:shadow-2xl lg:overflow-hidden">
+      
+      <!-- 1. Le cercle bleu foncé (Passé en z-0 pour laisser le formulaire passer au-dessus) -->
+      <div class="w-full aspect-square lg:aspect-auto lg:h-full lg:w-1/2 bg-bleu-marine rounded-full lg:rounded-none z-0 relative flex flex-col items-center justify-center lg:bg-[#A6C4D9]">
+        
+        <!-- Contenu Desktop : Le grand logo centré -->
+        <div class="hidden lg:flex flex-col items-center justify-center z-20">
+          <img src="/logo.svg" alt="Logo Be Drippy" class="w-72" />
+        </div>
+
+        <!-- Contenu Mobile : Bouton Retour et Titre -->
+        <div class="absolute top-[12%] w-full flex flex-col items-center justify-center lg:hidden z-20">
+          <a href="/app/auth" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-bleu-marine shadow-md transition-transform active:scale-95 mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+          </a>
+          <h2 class="text-white text-[28px] font-black">Se connecter</h2>
+        </div>
+        
+      </div>
+
+      <!-- 3. Le rectangle bleu foncé (Passé en z-20 pour qu'il s'affiche par-dessus le cercle) -->
+      <div class="w-full flex-grow bg-bleu-marine z-20 relative -mt-[50%] lg:mt-0 lg:w-1/2 flex flex-col">
+        
+        <!-- Espaceur mathématique (Uniquement sur mobile) : 
+             Réduit à pt-[15%] pour que le formulaire soit bien haut -->
+        <div class="w-full pt-[15%] lg:hidden shrink-0 pointer-events-none"></div>
+
+        <!-- Zone du formulaire -->
+        <div class="w-full flex-grow flex flex-col justify-start lg:justify-center items-center px-8 lg:px-16 relative z-30 pb-6 lg:pb-0">
+          
+          <!-- En-tête Desktop (Bouton retour + Titre) : Caché sur mobile -->
+          <div class="hidden lg:flex w-full items-center gap-4 mb-8">
+            <a href="/app/auth" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-bleu-marine shadow-md hover:bg-gray-100 transition-colors shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+            </a>
+            <h2 class="text-white text-[32px] font-black">Se connecter</h2>
+          </div>
+
+          <!-- Le Formulaire de connexion -->
+          <form method="POST" class="flex flex-col gap-6 w-full mt-4 lg:mt-0">
+            
+            <div class="flex flex-col gap-2 w-full">
+              <label for="email" class="text-white font-bold text-lg ml-1">Email</label>
+              <input type="email" name="email" id="email" placeholder="votre@email.com" required 
+                class="p-4 rounded-full text-bleu-marine font-medium bg-white focus:outline-none focus:ring-4 focus:ring-[#A6C4D9]/50 w-full placeholder:text-gray-400 shadow-inner" />
+            </div>
+            
+            <div class="flex flex-col gap-2 w-full">
+              <label for="password" class="text-white font-bold text-lg ml-1">Mot de passe</label>
+              <input type="password" name="password" id="password" placeholder="••••••••" required 
+                class="p-4 rounded-full text-bleu-marine font-medium bg-white focus:outline-none focus:ring-4 focus:ring-[#A6C4D9]/50 w-full placeholder:text-gray-400 shadow-inner" />
+            </div>
+
+            {error && <p class="text-[#F4E6A5] font-bold text-center text-sm">{error}</p>}
+
+            <button type="submit" class="w-full bg-[#F4E6A5] hover:bg-[#eadd8c] text-bleu-marine font-extrabold text-2xl py-4 rounded-full text-center transition-all active:scale-95 shadow-md mt-4 lg:mt-4">
+              Se connecter
+            </button>
+            
+          </form>
+          
+        </div>
+        
+      </div>
+      
+    </div>
+    
+  </div>
+</AppLayout>

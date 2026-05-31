@@ -1,8 +1,6 @@
 ---
-/* src/layouts/LandingLayout.astro */
 import '../styles/global.css';
-import HeaderL from '../components/landing/HeaderL.astro';
-import FooterL from '../components/landing/FooterL.astro';
+
 
 interface Props {
   title: string;
@@ -15,22 +13,24 @@ const { title } = Astro.props;
 <html lang="fr" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="L'intelligence artificielle au service de votre style quotidien." />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="L'application Be Drippy pour gérer vos tenues quotidiennes." />
+    <!-- Ajout de propriétés au viewport pour empêcher le zoom sur mobile (crucial pour l'ergonomie des sliders) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title} - Be Drippy</title>
   </head>
   
   <body class="bg-white text-bleu-marine min-h-screen flex flex-col relative overflow-x-hidden">
-    <HeaderL />
+    
     
     <main class="flex-grow pt-32 pb-20 w-full overflow-hidden">
-  <div class="w-full"> 
-    <slot />
-  </div>
-</main>
+      <div class="w-full"> 
+        <slot />
+      </div>
+    </main>
 
-    <FooterL />
+
+    
   </body>
 </html>
