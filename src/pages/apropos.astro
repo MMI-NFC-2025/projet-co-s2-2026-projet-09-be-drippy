@@ -1,0 +1,162 @@
+---
+/* src/pages/apropos.astro */
+import LandingLayout from '../layouts/LandingLayout.astro';
+---
+
+<LandingLayout title="À propos">
+
+  <div class="flex flex-col w-full -mt-32 relative z-10 mb-12 lg:mb-16">
+    
+    <section class="w-full h-[60vh] lg:h-[70vh] relative z-0">
+      <img 
+        src="/img/herolanding.avif" 
+        alt="L'histoire de Be Drippy" 
+        class="absolute inset-0 w-full h-full object-cover object-center"
+      />
+    </section>
+
+    <section class="grille relative z-10 mt-12 lg:mt-16">
+      
+      <div class="col-full bg-bleu-claire rounded-[32px] p-10 lg:p-16 flex flex-col lg:flex-row items-center gap-12 relative">
+        
+        <div class="lg:w-3/5 flex flex-col items-start gap-6 relative z-20">
+          
+          <h1 class="font-display text-titre-sm lg:text-titre-md text-bleu-marine leading-tight">
+            À Propos de nous
+          </h1>
+          
+          <p class="text-corp-md lg:text-corp-lg text-bleu-marine font-extrabold uppercase tracking-wider">
+            Le projet Be Drippy est porté par deux étudiants en MMI passionnés par l'innovation.
+          </p>
+
+          <p class="text-corp-md lg:text-corp-lg text-bleu-marine/90 leading-relaxed">
+            Notre aventure est née d'un défi quotidien : composer une tenue stylée capable de résister aux caprices de la météo. Pour répondre à cette frustration, nous avons imaginé un assistant intelligent qui croise en temps réel les données climatiques avec le contenu réel de votre armoire. Notre mission est de simplifier vos matins en éliminant la fatigue décisionnelle grâce à une numérisation intuitive de vos vêtements.
+          </p>
+
+          <p class="text-corp-md lg:text-corp-lg text-bleu-marine/90 leading-relaxed">
+            Au-delà de l'aspect pratique, nous souhaitons transformer votre vestiaire en un espace de partage et d'inspiration. Be Drippy ne se contente pas de prédire le temps, c'est une passerelle vers une communauté bienveillante où le style devient un langage commun. En valorisant ce que vous possédez déjà, nous défendons une mode plus durable et créative, garantissant confort et affirmation de soi quelles que soient les conditions extérieures.
+          </p>
+          
+        </div>
+
+        <div class="lg:w-2/5 flex flex-col justify-center items-center gap-8 lg:gap-10 w-full relative z-20">
+          
+          <div class="flex flex-col items-center gap-4">
+            <!-- Agrandissement des ronds (w-40 h-40 en mobile, w-52 h-52 sur desktop) -->
+            <div class="w-40 h-40 lg:w-52 lg:h-52 rounded-full bg-white/40 border-4 border-white overflow-hidden flex items-center justify-center relative">
+              <span class="text-bleu-marine/50 font-display text-corp-md text-center px-4">Photo<br/>Thomas</span>
+            </div>
+            <!-- Changement de la taille de texte pour les noms -->
+            <span class="font-display text-corp-md lg:text-corp-lg text-bleu-marine text-center leading-tight">
+              Thomas<br/>Perruchot
+            </span>
+          </div>
+
+          <div class="flex flex-col items-center gap-4">
+            <!-- Agrandissement des ronds -->
+            <div class="w-40 h-40 lg:w-52 lg:h-52 rounded-full bg-white/40 border-4 border-white overflow-hidden flex items-center justify-center relative">
+              <span class="text-bleu-marine/50 font-display text-corp-md text-center px-4">Photo<br/>Enzo</span>
+            </div>
+            <!-- Changement de la taille de texte pour les noms -->
+            <span class="font-display text-corp-md lg:text-corp-lg text-bleu-marine text-center leading-tight">
+              Enzo<br/>Loddo
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+      
+    </section>
+
+    <section class="grille relative z-10 mt-12 lg:mt-16">
+      
+      <div class="col-full bg-jaune rounded-[32px] p-8 lg:p-16 relative overflow-hidden flex flex-col items-center justify-center">
+        
+        <div class="flex flex-col items-center text-center max-w-3xl gap-6 mb-12 relative z-10">
+          <h2 class="font-display text-titre-sm lg:text-titre-md text-bleu-marine leading-tight">
+            La technologie au service du style
+          </h2>
+          <p class="text-corp-md lg:text-corp-lg text-bleu-marine/90 leading-relaxed">
+            Be Drippy n'est pas qu'un simple catalogue visuel. C'est un moteur de recommandation intelligent. En couplant une IA de reconnaissance visuelle (pour l'auto-tagging) et des données météorologiques précises, notre application devient votre styliste personnel de poche.
+          </p>
+        </div>
+
+        <div class="w-full relative">
+          <div class="hidden lg:flex absolute top-1/2 left-0 w-full items-center z-0 px-4 -translate-y-1/2">
+            <div class="h-[3px] bg-white flex-1"></div>
+            <svg class="w-10 h-10 text-white -ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 5l7 7-7 7"></path>
+            </svg>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 w-full relative z-10">
+            
+            <div class="bg-bleu-claire rounded-[32px] p-6 lg:p-8 flex flex-col gap-6">
+              <h3 class="font-display text-titre-sm lg:text-titre-md text-bleu-marine text-center leading-tight">
+                Innovation
+              </h3>
+              <div class="bg-white rounded-[24px] p-6 lg:p-8 flex-1">
+                <p class="text-bleu-marine text-corp-md lg:text-corp-lg leading-relaxed text-left">
+                  L'intelligence artificielle analyse vos photos pour tagger automatiquement la saison, la couleur et la matière.
+                </p>
+              </div>
+            </div>
+
+            <div class="bg-bleu-claire rounded-[32px] p-6 lg:p-8 flex flex-col gap-6">
+              <h3 class="font-display text-titre-sm lg:text-titre-md text-bleu-marine text-center leading-tight">
+                Précision
+              </h3>
+              <!-- Retrait de la bordure bleue ici -->
+              <div class="bg-white rounded-[24px] p-6 lg:p-8 flex-1">
+                <p class="text-bleu-marine text-corp-md lg:text-corp-lg leading-relaxed text-left">
+                  Un algorithme pointu qui croise votre inventaire avec les prévisions météo, heure par heure.
+                </p>
+              </div>
+            </div>
+
+            <div class="bg-bleu-claire rounded-[32px] p-6 lg:p-8 flex flex-col gap-6">
+              <h3 class="font-display text-titre-sm lg:text-titre-md text-bleu-marine text-center leading-tight">
+                Communauté
+              </h3>
+              <div class="bg-white rounded-[24px] p-6 lg:p-8 flex-1">
+                <p class="text-bleu-marine text-corp-md lg:text-corp-lg leading-relaxed text-left">
+                  Un réseau social intégré pour partager vos "Outfits of the day" et vous inspirer des tendances locales.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      
+    </section>
+
+    <section class="grille relative z-10 mt-12 lg:mt-16">
+      <div class="col-full bg-bleu-marine rounded-[32px] p-10 lg:p-16 flex flex-col lg:flex-row items-center justify-between gap-10 relative overflow-hidden">
+        
+        <div class="absolute -top-10 -right-10 w-40 h-40 bg-jaune/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-bleu-claire/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="flex flex-col items-start text-left lg:w-2/3 relative z-10">
+          <h2 class="font-display text-titre-sm lg:text-titre-md text-white leading-tight mb-4">
+            Prêt à révolutionner vos matins ?
+          </h2>
+          <p class="text-corp-md lg:text-corp-lg text-white/80 max-w-2xl">
+            Rejoignez Be Drippy dès aujourd'hui et laissez notre intelligence artificielle composer vos meilleures tenues.
+          </p>
+        </div>
+        
+        <div class="lg:w-1/3 flex justify-start lg:justify-end w-full relative z-10">
+          <a href="/register" class="bg-jaune text-bleu-marine font-display text-corp-md uppercase tracking-wider px-10 py-5 rounded-full hover:scale-105 transition-transform text-center w-full md:w-auto">
+            Démarrer mon vestiaire
+          </a>
+        </div>
+        
+      </div>
+    </section>
+
+  </div>
+
+</LandingLayout>
