@@ -1,0 +1,97 @@
+---
+/* src/pages/contact.astro */
+import LandingLayout from '../layouts/LandingLayout.astro';
+---
+
+<LandingLayout title="Contact">
+
+  <div class="flex flex-col w-full -mt-32 relative z-10 mb-12 lg:mb-16">
+    
+    <section class="w-full h-[40vh] lg:h-[50vh] relative z-0">
+      <img src="/img/herolanding.avif" alt="Contact Be Drippy" class="absolute inset-0 w-full h-full object-cover object-center" />
+    </section>
+
+    <section class="grille relative z-10 mt-12 lg:mt-16">
+      
+      <div class="col-full bg-bleu-claire rounded-[32px] p-10 lg:p-16 relative">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+          
+          <div class="flex flex-col gap-8">
+            <h1 class="font-display text-titre-sm lg:text-titre-md text-bleu-marine leading-tight">
+              Des questions ?
+            </h1>
+            <p class="text-corp-md lg:text-corp-lg text-bleu-marine/90 leading-relaxed font-semibold">
+              Contactez notre équipe support si vous avez la moindre interrogation ou besoin d'aide. Nous sommes là pour vous accompagner.
+            </p>
+            
+            <div class="flex flex-wrap gap-4">
+              <a href="mailto:contact@bedrippy.com" class="bg-white text-bleu-marine font-display text-corp-md uppercase tracking-wider px-8 py-4 rounded-full border-2 border-bleu-marine/10 hover:bg-bleu-marine hover:text-white transition-all">
+                Envoyer un email
+              </a>
+            </div>
+          </div>
+
+          <form class="bg-white rounded-[32px] p-8 lg:p-10 flex flex-col gap-6 border border-bleu-marine/10 shadow-sm">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="flex flex-col gap-2">
+                <label class="font-display text-corp-md text-bleu-marine uppercase tracking-wider font-bold">Prénom*</label>
+                <input type="text" class="bg-bleu-claire/10 border border-bleu-marine/20 rounded-xl p-4 outline-none focus:ring-2 focus:ring-[#38bdf8] focus:border-transparent transition-all" required />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label class="font-display text-corp-md text-bleu-marine uppercase tracking-wider font-bold">Nom*</label>
+                <input type="text" class="bg-bleu-claire/10 border border-bleu-marine/20 rounded-xl p-4 outline-none focus:ring-2 focus:ring-[#38bdf8] focus:border-transparent transition-all" required />
+              </div>
+            </div>
+            
+            <div class="flex flex-col gap-2">
+              <label class="font-display text-corp-md text-bleu-marine uppercase tracking-wider font-bold">Email*</label>
+              <input type="email" class="bg-bleu-claire/10 border border-bleu-marine/20 rounded-xl p-4 outline-none focus:ring-2 focus:ring-[#38bdf8] focus:border-transparent transition-all" required />
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label class="font-display text-corp-md text-bleu-marine uppercase tracking-wider font-bold">Sujet*</label>
+              <input type="text" class="bg-bleu-claire/10 border border-bleu-marine/20 rounded-xl p-4 outline-none focus:ring-2 focus:ring-[#38bdf8] focus:border-transparent transition-all" required />
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label class="font-display text-corp-md text-bleu-marine uppercase tracking-wider font-bold">Que avez-vous en tête ?*</label>
+              <textarea rows="4" class="bg-bleu-claire/10 border border-bleu-marine/20 rounded-xl p-4 outline-none focus:ring-2 focus:ring-[#38bdf8] focus:border-transparent transition-all"></textarea>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-6 items-center">
+              <div class="flex flex-col gap-2 flex-1 w-full">
+                <label class="font-display text-corp-md text-bleu-marine uppercase tracking-wider font-bold">Catégorie</label>
+                <select class="bg-bleu-claire/10 border border-bleu-marine/20 rounded-xl p-4 outline-none focus:ring-2 focus:ring-[#38bdf8] transition-all">
+                  <option>Support technique</option>
+                  <option>Partenariat</option>
+                  <option>Autre</option>
+                </select>
+              </div>
+              
+              <button type="submit" class="bg-jaune text-bleu-marine font-display text-corp-md uppercase tracking-wider py-4 px-10 rounded-full hover:scale-[1.02] transition-transform font-bold shadow-md self-end w-full md:w-auto">
+                Envoyer
+              </button>
+            </div>
+          </form>
+
+        </div>
+        
+      </div>
+    </section>
+
+    <section class="grille relative z-10 mt-12 lg:mt-16">
+      <div class="col-full bg-bleu-marine rounded-[32px] p-8 lg:p-12 flex flex-col items-center gap-8 text-center shadow-lg">
+        <h3 class="font-display text-titre-sm text-white">Retrouvez-nous aussi sur :</h3>
+        <div class="flex flex-wrap justify-center gap-6">
+          <a href="#" class="bg-bleu-claire text-bleu-marine font-display text-corp-md uppercase tracking-wider px-8 py-4 rounded-full hover:scale-105 transition-transform font-bold">Instagram</a>
+          <a href="#" class="bg-bleu-claire text-bleu-marine font-display text-corp-md uppercase tracking-wider px-8 py-4 rounded-full hover:scale-105 transition-transform font-bold">TikTok</a>
+          <a href="#" class="bg-bleu-claire text-bleu-marine font-display text-corp-md uppercase tracking-wider px-8 py-4 rounded-full hover:scale-105 transition-transform font-bold">Twitter/X</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+</LandingLayout>

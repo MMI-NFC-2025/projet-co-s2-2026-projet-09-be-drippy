@@ -1,11 +1,192 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+/* src/pages/index.astro */
+import LandingLayout from '../layouts/LandingLayout.astro';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<LandingLayout title="Accueil">
+
+  <!-- Retour à la structure initiale -->
+  <div class="flex flex-col w-full -mt-32 lg:-mt-32 relative z-10 mb-12 lg:mb-16">
+    
+    <section class="w-full h-[50vh] lg:h-[70vh] relative z-0">
+      <img 
+        src="/img/herolanding.avif" 
+        alt="Fond Hero Be Drippy" 
+        class="absolute inset-0 w-full h-full object-cover object-center"
+      />
+    </section>
+
+    <!-- SECTION CARD 1 (Bleue) -->
+    <section class="grille relative z-10 mt-8 lg:mt-16">
+      
+      <div class="col-full bg-bleu-claire rounded-[32px] p-6 lg:p-16 flex flex-col lg:flex-row items-center gap-8 lg:gap-12 relative">
+        
+        <div class="lg:w-1/2 flex flex-col items-center lg:items-start gap-4 lg:gap-6 relative z-20 text-center lg:text-left">
+          
+          <h1 class="font-display text-2xl lg:text-titre-md text-bleu-marine leading-tight">
+            Ne vous laissez plus surprendre par la météo
+          </h1>
+          
+          <p class="text-sm lg:text-corp-lg text-bleu-marine/90 leading-relaxed font-medium max-w-sm lg:max-w-md">
+            Be Drippy analyse les prévisions heure par heure pour vous suggérer la tenue parfaite. 
+            Fini la panique du matin ou les regrets de l'après-midi : votre style s'adapte en temps réel.
+          </p>
+          
+          <a href="/register" class="mt-2 bg-jaune text-bleu-marine font-display text-sm lg:text-corp-md uppercase tracking-wider px-6 py-4 lg:px-10 lg:py-5 rounded-full hover:scale-105 transition-transform">
+            Démarrer mon vestiaire intelligent
+          </a>
+          
+        </div>
+
+        <div class="lg:w-1/2 flex justify-center w-full relative">
+          <img 
+            src="/smartphone.png" 
+            alt="Interface de l'application Be Drippy" 
+            class="w-[200px] lg:w-[340px] h-auto object-contain relative lg:-mt-56 lg:-mb-12 z-30"
+          />
+        </div>
+        
+      </div>
+      
+    </section>
+
+    <!-- SECTION CARD 2 (Jaune) -->
+    <section class="grille relative z-10 mt-8 lg:mt-16">
+      
+      <div class="col-full bg-jaune rounded-[32px] p-6 lg:p-16 relative overflow-hidden flex items-center justify-center">
+        
+        <div class="hidden lg:flex absolute top-[55%] left-0 w-full items-center z-0 px-4">
+          <div class="h-[3px] bg-white flex-1"></div>
+          <svg class="w-10 h-10 text-white -ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 5l7 7-7 7"></path>
+          </svg>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 w-full relative z-10">
+          
+          <div class="bg-bleu-claire rounded-[32px] p-6 lg:p-8 flex flex-col gap-4 lg:gap-6">
+            <h3 class="font-display text-lg lg:text-titre-sm text-bleu-marine text-center leading-tight">
+              Numérisez votre<br/>vestiaire
+            </h3>
+            <div class="bg-white rounded-[24px] p-6 lg:p-8 flex-1">
+              <p class="text-sm lg:text-corp-lg text-bleu-marine leading-relaxed text-left">
+                Prenez quelques photos pour transformer votre armoire en catalogue numérique. Notre IA organise automatiquement vos vêtements.
+              </p>
+            </div>
+          </div>
+
+          <div class="bg-bleu-claire rounded-[32px] p-6 lg:p-8 flex flex-col gap-4 lg:gap-6">
+            <h3 class="font-display text-lg lg:text-titre-sm text-bleu-marine text-center leading-tight">
+              L'intelligence<br/>météo
+            </h3>
+            <div class="bg-white rounded-[24px] p-6 lg:p-8 flex-1 border-[3px] border-[#38bdf8]">
+              <p class="text-sm lg:text-corp-lg text-bleu-marine leading-relaxed text-left">
+                Notre algorithme croise la météo en temps réel avec votre inventaire. Be Drippy sélectionne uniquement les pièces adaptées.
+              </p>
+            </div>
+          </div>
+
+          <div class="bg-bleu-claire rounded-[32px] p-6 lg:p-8 flex flex-col gap-4 lg:gap-6">
+            <h3 class="font-display text-lg lg:text-titre-sm text-bleu-marine text-center leading-tight">
+              Partagez votre<br/>Drippy
+            </h3>
+            <div class="bg-white rounded-[24px] p-6 lg:p-8 flex-1">
+              <p class="text-sm lg:text-corp-lg text-bleu-marine leading-relaxed text-left">
+                Rejoignez la communauté pour sauvegarder et diffuser vos meilleurs looks et vous inspirer des tendances locales.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- SECTION BANDE DÉFILANTE -->
+    <section class="w-full bg-bleu-marine py-6 mt-8 lg:mt-16 overflow-hidden flex whitespace-nowrap border-y border-white/10 relative">
+      <div class="animate-marquee flex gap-8 lg:gap-16 items-center px-6">
+        <span class="font-display text-sm lg:text-titre-sm text-jaune uppercase tracking-widest">Garde-robe Intelligente</span>
+        <span class="text-white text-sm lg:text-titre-sm">✦</span>
+        <span class="font-display text-sm lg:text-titre-sm text-jaune uppercase tracking-widest">Météo en temps réel</span>
+        <span class="text-white text-sm lg:text-titre-sm">✦</span>
+        <span class="font-display text-sm lg:text-titre-sm text-jaune uppercase tracking-widest">Style sur-mesure</span>
+      </div>
+      <div class="animate-marquee flex gap-8 lg:gap-16 items-center px-6" aria-hidden="true">
+        <span class="font-display text-sm lg:text-titre-sm text-jaune uppercase tracking-widest">Garde-robe Intelligente</span>
+        <span class="text-white text-sm lg:text-titre-sm">✦</span>
+        <span class="font-display text-sm lg:text-titre-sm text-jaune uppercase tracking-widest">Météo en temps réel</span>
+        <span class="text-white text-sm lg:text-titre-sm">✦</span>
+        <span class="font-display text-sm lg:text-titre-sm text-jaune uppercase tracking-widest">Style sur-mesure</span>
+      </div>
+    </section>
+
+    <!-- SECTION OFFRES -->
+    <section class="grille relative z-10 mt-8 lg:mt-16">
+      
+      <div class="col-full bg-bleu-claire rounded-[32px] p-6 lg:p-16 flex flex-col items-center relative">
+        
+        <h2 class="font-display text-xl lg:text-titre-md text-bleu-marine mb-4 text-center leading-tight">
+          Choisissez votre style
+        </h2>
+        <p class="text-sm lg:text-corp-lg text-bleu-marine/80 text-center max-w-2xl mb-8">
+          Que vous cherchiez simplement à vous organiser ou à inspirer toute la communauté.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
+          
+          <div class="bg-white rounded-[24px] p-6 lg:p-10 flex flex-col border border-transparent shadow-sm">
+            <h3 class="font-display text-lg lg:text-titre-sm text-bleu-marine mb-2">Basic Drippy</h3>
+            <div class="flex items-end gap-2 mb-6">
+              <span class="font-display text-3xl lg:text-titre-lg text-bleu-marine leading-none">0€</span>
+            </div>
+            
+            <ul class="flex flex-col gap-3 flex-1 text-sm lg:text-corp-md text-bleu-marine">
+              <li class="flex items-start gap-2">✓ Garde-robe illimitée</li>
+              <li class="flex items-start gap-2">✓ Auto-tagging IA par photo</li>
+            </ul>
+          </div>
+
+          <div class="bg-bleu-marine rounded-[24px] p-6 lg:p-10 flex flex-col relative shadow-xl">
+            <h3 class="font-display text-lg lg:text-titre-sm text-white mb-2">Premium Drippy</h3>
+            <div class="flex items-end gap-2 mb-6">
+              <span class="font-display text-3xl lg:text-titre-lg text-jaune leading-none">4.99€</span>
+            </div>
+            
+            <ul class="flex flex-col gap-3 flex-1 text-sm lg:text-corp-md text-white">
+              <li class="flex items-start gap-2">✓ Accès au réseau social</li>
+              <li class="flex items-start gap-2">✓ Algorithme météo prédictif</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION CALL TO ACTION FINAL -->
+    <section class="grille relative z-10 mt-8 lg:mt-16">
+      <div class="col-full bg-bleu-marine rounded-[32px] p-8 lg:p-16 flex flex-col items-center lg:flex-row justify-between gap-6 shadow-2xl relative overflow-hidden text-center lg:text-left">
+        <div class="relative z-10">
+          <h2 class="font-display text-xl lg:text-titre-md text-white leading-tight mb-2">
+            Prêt à révolutionner vos matins ?
+          </h2>
+          <p class="text-sm lg:text-corp-lg text-white/80 max-w-lg">
+            Rejoignez Be Drippy dès aujourd'hui.
+          </p>
+        </div>
+        <a href="/register" class="bg-jaune text-bleu-marine font-display text-sm lg:text-corp-md uppercase tracking-wider px-8 py-4 rounded-full w-full lg:w-auto text-center z-10">
+          Démarrer
+        </a>
+      </div>
+    </section>
+  </div>
+</LandingLayout>
+
+<style>
+  .animate-marquee {
+    animation: marquee 25s linear infinite;
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-100%); }
+  }
+</style>

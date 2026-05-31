@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* Couleurs de la DA Be Drippy */
+  --color-bleu-marine: #24305e;
+  --color-bleu-fonce: #374785;
+  --color-bleu-claire: #a8d0e6;
+  --color-rouge: #f76c6c;
+  --color-jaune: #f8e9a1;
+  
+  /* Typographies */
+  --font-body: "DM Sans", sans-serif;
+  --font-display: "DM Sans", sans-serif;
+
+  /* Tailles des textes (légèrement réduites pour un meilleur équilibre) */
+  --text-titre-lg: 36px;
+  --text-titre-md: 32px;
+  --text-titre-sm: 22px; 
+  --text-corp-xl: 18px;
+  --text-corp-lg: 15px;
+  --text-corp-md: 12px;
+
+  /* Grille globale */
+  --my-grid: 12;
+}
+
+@layer base {
+  body {
+    /* Ajout de font-medium pour donner un aspect très légèrement plus gras à tout le texte */
+    @apply bg-white text-bleu-marine font-body antialiased font-medium;
+  }
+
+  .font-display {
+    font-family: 'DM Sans', sans-serif !important;
+    /* Passage en font-extrabold pour des titres plus impactants */
+    @apply font-extrabold uppercase tracking-tight; 
+  }
+}
+
+@layer components {
+  .grille {
+    @apply px-6 mx-auto w-full max-w-[1600px];
+    @apply lg:grid lg:grid-cols-(--my-grid) lg:gap-8;
+  }
+
+  .col-full {
+    grid-column: 1 / -1;
+  }
+}
