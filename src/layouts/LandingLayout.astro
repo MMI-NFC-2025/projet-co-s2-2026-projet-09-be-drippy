@@ -25,9 +25,11 @@ const { title } = Astro.props;
   <body class="bg-white text-bleu-marine min-h-screen flex flex-col relative overflow-x-hidden">
     <HeaderL />
     
-    <main class="flex-grow pt-32 pb-20">
-      <slot />
-    </main>
+    <main class="flex-grow pt-32 pb-20 w-full overflow-hidden">
+  <div class="w-full"> 
+    <slot />
+  </div>
+</main>
 
     <FooterL />
   </body>

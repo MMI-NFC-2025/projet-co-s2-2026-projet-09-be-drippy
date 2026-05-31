@@ -5,8 +5,8 @@
 <footer class="bg-bleu-marine py-12">
   <div class="px-6 mx-auto w-full max-w-[1600px]">
     
-    <!-- Ligne 1 : Menu -->
-    <nav class="flex justify-start gap-12 lg:gap-16 pb-8">
+    <!-- Ligne 1 : Menu (Passage en wrap sur mobile pour éviter le débordement) -->
+    <nav class="flex flex-wrap justify-start gap-6 lg:gap-16 pb-8">
       <a href="/" class="text-white hover:text-jaune transition-colors text-sm font-display uppercase tracking-widest">Accueil</a>
       <a href="#apropos" class="text-white hover:text-jaune transition-colors text-sm font-display uppercase tracking-widest">A propos</a>
       <a href="/mentions" class="text-white hover:text-jaune transition-colors text-sm font-display uppercase tracking-widest">Mentions légales</a>
@@ -16,26 +16,26 @@
     <!-- Ligne 2 : Trait de séparation -->
     <div class="border-t border-white/20 mb-8 w-full"></div>
 
-    <!-- Ligne 3 : Grille stricte de 12 colonnes pour figer les espacements -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+    <!-- Ligne 3 : Grille ajustée pour mobile -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start lg:items-center">
       
-      <!-- Élément 1 : Logo (Réservé sur 2 colonnes) -->
+      <!-- Élément 1 : Logo -->
       <div class="lg:col-span-2 flex justify-start">
         <a href="/">
           <img src="/logo.svg" alt="Be Drippy Logo" class="h-10 w-auto" />
         </a>
       </div>
 
-      <!-- Élément 2 : Slogan (Réservé sur 5 colonnes pour lui donner de l'espace) -->
+      <!-- Élément 2 : Slogan -->
       <div class="lg:col-span-5 flex justify-start">
         <p class="text-white text-corp-lg leading-snug">
           L’intelligence artificielle au service de votre style quotidien.
         </p>
       </div>
 
-      <!-- Élément 3 : Contact & Copyright (Réservé sur 3 colonnes) -->
+      <!-- Élément 3 : Contact & Copyright -->
       <div class="lg:col-span-3 flex flex-col justify-center gap-1">
-        <a href="mailto:contact@bedrippy.fr" class="text-white hover:text-jaune transition-colors text-corp-lg">
+        <a href="mailto:contact@bedrippy.fr" class="text-white hover:text-jaune transition-colors text-corp-lg break-all">
           contact@bedrippy.fr
         </a>
         <p class="text-white/70 text-sm mt-1">
@@ -43,7 +43,7 @@
         </p>
       </div>
 
-      <!-- Élément 4 : Réseaux sociaux (Réservé sur les 2 dernières colonnes, forcé à droite) -->
+      <!-- Élément 4 : Réseaux sociaux -->
       <div class="lg:col-span-2 flex justify-start lg:justify-end gap-6">
         <!-- X / Twitter -->
         <a href="#" class="text-white hover:text-jaune transition-transform hover:scale-110">
