@@ -1,12 +1,19 @@
 ---
 import '../styles/global.css';
-import BottomNav from '../components/app/BottomNav.astro'; // Import du composant
+import AppHeader from '../components/app/AppHeader.astro'; // Import du nouveau composant Header
 
 interface Props {
   title: string;
 }
 
 const { title } = Astro.props;
+
+// On vérifie si le chemin actuel correspond à l'une des pages d'authentification
+const pathname = Astro.url.pathname;
+const isAuthPage = 
+  pathname.includes('/app/login') || 
+  pathname.includes('/app/register') || 
+  pathname.includes('/app/auth');
 ---
 
 <!doctype html>
@@ -22,15 +29,16 @@ const { title } = Astro.props;
   
   <body class="bg-gray-50 text-bleu-marine min-h-screen flex flex-col relative overflow-x-hidden">
     
+    <!-- Navigation fixée en haut : N'apparaît que si ce n'est PAS une page d'auth -->
+    {!isAuthPage && <AppHeader />}
+
     <!-- Contenu principal -->
-    <main class="flex-grow pt-32 pb-24 w-full overflow-hidden">
+    <!-- On gère l'espace en haut (pt-32) pour le header, et on le retire sur les pages d'auth (pt-0) -->
+    <main class={`flex-grow w-full overflow-hidden ${isAuthPage ? 'pt-0' : 'pt-32'} pb-10`}>
       <div class="w-full"> 
         <slot />
       </div>
     </main>
-
-    <!-- Navigation fixée en bas -->
-    
     
   </body>
 </html>

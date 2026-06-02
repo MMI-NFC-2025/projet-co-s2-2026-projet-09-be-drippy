@@ -1,0 +1,110 @@
+---
+/* src/pages/app/vestiaire/[id].astro */
+import AppLayout from '../../../layouts/AppLayout.astro';
+
+// LIGNE MAGIQUE POUR AUTORISER LES ROUTES DYNAMIQUES
+export const prerender = false;
+---
+
+<AppLayout title="Détail du vêtement">
+  <div class="px-6 max-w-[800px] mx-auto min-h-screen">
+    
+    <a href="/app/vestiaire" class="inline-flex items-center gap-2 text-gray-400 hover:text-bleu-marine font-bold mb-6 transition-colors mt-8">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+      </svg>
+      Retour au vestiaire
+    </a>
+
+    <div id="loading-state" class="text-center py-20 animate-pulse text-gray-400 font-bold">Chargement de la pièce...</div>
+    
+    <div id="error-state" style="display: none;" class="text-center py-20 text-red-500 font-bold">
+      Vêtement introuvable.
+    </div>
+
+    <div id="cloth-details" style="display: none;" class="bg-white rounded-[3rem] p-4 lg:p-8 shadow-xl border border-gray-100 mb-8 mt-2">
+      
+      <div class="w-full aspect-square rounded-[2rem] overflow-hidden bg-gray-50 mb-6 flex justify-center items-center relative">
+        <img id="cloth-image" src="" alt="Vêtement" class="w-full h-full object-cover" style="display: none;" />
+        <span id="no-image-text" class="text-gray-400 font-bold uppercase tracking-widest text-sm" style="display: none;">Pas d'image</span>
+      </div>
+      
+      <div class="px-4 pb-2">
+        <span id="cloth-category" class="bg-gray-100 text-gray-600 text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-full mb-3 inline-block"></span>
+        <h1 id="cloth-name" class="text-3xl lg:text-4xl font-black text-bleu-marine mb-1"></h1>
+        <p id="cloth-brand" class="text-lg lg:text-xl text-gray-400 font-bold uppercase tracking-wider mb-8"></p>
+        
+        <button id="delete-btn" class="w-full bg-red-50 text-red-500 hover:bg-red-500 hover:text-white font-extrabold text-lg py-4 rounded-full transition-all active:scale-95 border border-red-100">
+          Supprimer ce vêtement
+        </button>
+      </div>
+    </div>
+
+  </div>
+</AppLayout>
+
+<script>
+  import { pb } from '../../../../backend/pb.mjs';
+  import { getClothById, deleteCloth, getClothImageUrl } from '../../../../backend/clothes.js';
+
+  if (!pb.authStore.isValid) {
+    window.location.href = '/app/login';
+  }
+
+  const urlParts = window.location.pathname.split('/');
+  const clothId = urlParts[urlParts.length - 1];
+
+  const loading = document.getElementById('loading-state');
+  const errorState = document.getElementById('error-state');
+  const detailsContainer = document.getElementById('cloth-details');
+  const deleteBtn = document.getElementById('delete-btn');
+
+  async function loadDetail() {
+    if (!clothId || !loading || !errorState || !detailsContainer) return;
+
+    try {
+      const record = await getClothById(clothId);
+      
+      loading.style.display = 'none';
+      detailsContainer.style.display = 'block';
+
+      document.getElementById('cloth-name').textContent = record.name || 'Sans nom';
+      document.getElementById('cloth-brand').textContent = record.brand || '-';
+      document.getElementById('cloth-category').textContent = record.category || 'Général';
+
+      const imageUrl = getClothImageUrl(record);
+      // Correction du type TS
+      const imgEl = document.getElementById('cloth-image');
+      const noImgEl = document.getElementById('no-image-text');
+      
+      if (imageUrl && imgEl) {
+        imgEl.src = imageUrl;
+        imgEl.style.display = 'block';
+        noImgEl.style.display = 'none';
+      } else if (imgEl) {
+        imgEl.style.display = 'none';
+        noImgEl.style.display = 'block';
+      }
+
+    } catch (error) {
+      console.error("Erreur :", error);
+      loading.style.display = 'none';
+      errorState.style.display = 'block';
+    }
+  }
+
+  deleteBtn?.addEventListener('click', async () => {
+    const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cette pièce ? L'action est irréversible.");
+    if (confirmation) {
+      try {
+        await deleteCloth(clothId);
+        window.location.href = '/app/vestiaire';
+      } catch (error) {
+        console.error("Erreur lors de la suppression :", error);
+        alert("Impossible de supprimer la pièce.");
+      }
+    }
+  });
+
+  loadDetail();
+</script>
