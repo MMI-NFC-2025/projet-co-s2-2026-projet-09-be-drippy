@@ -99,11 +99,11 @@ import AppLayout from '../../layouts/AppLayout.astro';
         document.cookie = pb.authStore.exportToCookie({ httpOnly: false, path: '/' });
 
         // Redirection vers le tableau de bord !
-        window.location.href = '/app/dashboard';
+        window.location.href = '/app/onboarding';
         
       } catch (err) {
         console.error("Échec de connexion :", err);
-        pb.authStore.clear(); // On vide les infos au cas où
+        pb.authStore.clear();
         errorMsg.textContent = "Email ou mot de passe incorrect.";
         errorMsg.classList.remove('hidden');
       }

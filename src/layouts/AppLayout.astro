@@ -8,12 +8,13 @@ interface Props {
 
 const { title } = Astro.props;
 
-// On vérifie si le chemin actuel correspond à l'une des pages d'authentification
+// On vérifie si le chemin actuel correspond à l'une des pages d'authentification ou d'onboarding
 const pathname = Astro.url.pathname;
 const isAuthPage = 
   pathname.includes('/app/login') || 
   pathname.includes('/app/register') || 
-  pathname.includes('/app/auth');
+  pathname.includes('/app/auth') ||
+  pathname.includes('/app/onboarding');
 ---
 
 <!doctype html>
@@ -29,7 +30,7 @@ const isAuthPage =
   
   <body class="bg-gray-50 text-bleu-marine min-h-screen flex flex-col relative overflow-x-hidden">
     
-    <!-- Navigation fixée en haut : N'apparaît que si ce n'est PAS une page d'auth -->
+    <!-- Navigation fixée en haut : N'apparaît que si ce n'est PAS une page d'auth ni onboarding -->
     {!isAuthPage && <AppHeader />}
 
     <!-- Contenu principal -->
