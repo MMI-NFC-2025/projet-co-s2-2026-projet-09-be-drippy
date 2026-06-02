@@ -1,0 +1,37 @@
+---
+/* src/components/BottomNav.astro */
+const pathname = Astro.url.pathname;
+---
+
+<nav class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 px-4 py-3 flex justify-between items-center z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+  
+  <!-- Vestiaire (Accueil) -->
+  <a href="/app/dashboard" class={`flex flex-col items-center transition-colors ${pathname === '/app/dashboard' ? 'text-bleu-marine' : 'text-gray-400'}`}>
+    <span class="text-xl">👕</span>
+    <span class="text-[10px] font-bold">Vestiaire</span>
+  </a>
+
+  <!-- Communauté -->
+  <a href="/app/community" class={`flex flex-col items-center transition-colors ${pathname === '/app/community' ? 'text-bleu-marine' : 'text-gray-400'}`}>
+    <span class="text-xl">👥</span>
+    <span class="text-[10px] font-bold">Communauté</span>
+  </a>
+
+  <!-- Profil (Bouton central flottant) -->
+  <a href="/app/profile" class="bg-bleu-marine text-white p-4 rounded-full -mt-10 shadow-lg border-4 border-gray-50 hover:scale-105 transition-transform">
+    <span class="text-2xl">👤</span>
+  </a>
+
+  <!-- Météo -->
+  <a href="/app/weather" class={`flex flex-col items-center transition-colors ${pathname === '/app/weather' ? 'text-bleu-marine' : 'text-gray-400'}`}>
+    <span class="text-xl">☀️</span>
+    <span class="text-[10px] font-bold">Météo</span>
+  </a>
+
+  <!-- Réglages -->
+  <a href="/app/settings" class={`flex flex-col items-center transition-colors ${pathname === '/app/settings' ? 'text-bleu-marine' : 'text-gray-400'}`}>
+    <span class="text-xl">⚙️</span>
+    <span class="text-[10px] font-bold">Réglages</span>
+  </a>
+
+</nav>

@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-
+import BottomNav from '../components/app/BottomNav.astro'; // Import du composant
 
 interface Props {
   title: string;
@@ -14,23 +14,23 @@ const { title } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="L'application Be Drippy pour gérer vos tenues quotidiennes." />
-    <!-- Ajout de propriétés au viewport pour empêcher le zoom sur mobile (crucial pour l'ergonomie des sliders) -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title} - Be Drippy</title>
   </head>
   
-  <body class="bg-white text-bleu-marine min-h-screen flex flex-col relative overflow-x-hidden">
+  <body class="bg-gray-50 text-bleu-marine min-h-screen flex flex-col relative overflow-x-hidden">
     
-    
-    <main class="flex-grow pt-32 pb-20 w-full overflow-hidden">
+    <!-- Contenu principal -->
+    <main class="flex-grow pt-32 pb-24 w-full overflow-hidden">
       <div class="w-full"> 
         <slot />
       </div>
     </main>
 
-
+    <!-- Navigation fixée en bas -->
+    
     
   </body>
 </html>
