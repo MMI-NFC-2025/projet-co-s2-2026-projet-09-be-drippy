@@ -1,0 +1,29 @@
+import { e as createComponent, k as renderComponent, r as renderTemplate, m as maybeRenderHead } from '../../chunks/astro/server_ByvLmRog.mjs';
+import 'piccolore';
+import { $ as $$AppLayout } from '../../chunks/AppLayout_D5Yn7mJV.mjs';
+export { renderers } from '../../renderers.mjs';
+
+const $$Auth = createComponent(($$result, $$props, $$slots) => {
+  return renderTemplate`${renderComponent($$result, "AppLayout", $$AppLayout, { "title": "Bienvenue sur Be Drippy" }, { "default": ($$result2) => renderTemplate` ${maybeRenderHead()}<div class="fixed inset-0 z-50 bg-[#A6C4D9] flex flex-col items-center justify-end lg:justify-center overflow-hidden"> <div class="w-full md:max-w-md lg:max-w-5xl h-[85vh] lg:h-[550px] flex flex-col lg:flex-row relative lg:bg-bleu-marine lg:rounded-[3rem] lg:shadow-2xl lg:overflow-hidden"> <div class="w-full aspect-square lg:aspect-auto lg:h-full lg:w-1/2 bg-bleu-marine rounded-full lg:rounded-none z-10 relative flex items-center justify-center"> <div class="w-[75vw] md:w-[320px] lg:w-[380px] aspect-square bg-[#A6C4D9] rounded-full z-20 flex flex-col items-center justify-center p-4 shadow-sm lg:shadow-none"> <p class="text-white font-bold text-xs tracking-widest uppercase text-center mb-4">
+Rejoignez la communauté
+</p> <img src="/logo.svg" alt="Logo Be Drippy" class="w-48 lg:w-56"> </div> </div> <div class="w-full flex-grow bg-bleu-marine z-0 relative -mt-[50%] lg:mt-0 lg:w-1/2 flex flex-col justify-end lg:justify-center pb-12 lg:pb-0"> <div class="w-full px-8 lg:px-16 flex flex-col gap-4 lg:gap-8 items-center relative z-30"> <a href="/app/register" class="w-full bg-[#F4E6A5] hover:bg-[#eadd8c] text-bleu-marine font-extrabold text-2xl lg:text-xl py-4 rounded-full text-center transition-transform active:scale-95 shadow-md">
+s'inscrire
+</a> <p class="text-white font-semibold text-sm mt-3 lg:mt-0 text-center">
+Vous avez déjà un compte ? <br class="hidden lg:block lg:mb-2"> <a href="/app/login" class="text-[#F4E6A5] hover:underline ml-1 lg:ml-0">
+se connecter
+</a> </p> </div> </div> </div> </div> ` })}`;
+}, "/Users/perruchot/Documents/GitHub/projet-co-s2-2026-projet-09-be-drippy/src/pages/app/auth.astro", void 0);
+
+const $$file = "/Users/perruchot/Documents/GitHub/projet-co-s2-2026-projet-09-be-drippy/src/pages/app/auth.astro";
+const $$url = "/app/auth";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: $$Auth,
+  file: $$file,
+  url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };
