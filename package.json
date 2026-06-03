@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "projet-be-drippy",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -9,7 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/netlify": "^7.0.12",
+    "@astrojs/netlify": "^5.5.4",
     "@google/generative-ai": "^0.24.1",
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^5.17.3",
