@@ -5,38 +5,28 @@ import AppLayout from '../../../layouts/AppLayout.astro';
 
 <AppLayout title="Mon Vestiaire">
   
-  <!-- FOND GLOBAL BLEU CLAIR (Fixé pour couvrir absolument tout l'écran, même derrière le header) -->
   <div class="fixed inset-0 bg-bleu-claire -z-10"></div>
 
-  <!-- CONTENEUR DE PAGE -->
   <div class="min-h-screen flex flex-col relative overflow-x-hidden pt-2 lg:pt-8">
 
-    <!-- CONTENEUR PRINCIPAL DU VESTIAIRE -->
     <div class="w-full flex-grow flex flex-col relative mt-6 lg:mt-12">
       
-      <!-- COUCHE D'ARRIÈRE-PLAN BLEU MARINE (Cercle parfait + Rectangle) -->
       <div class="absolute inset-0 flex flex-col pointer-events-none z-0">
-        <!-- Le Cercle (Diamètre = largeur de la page) -->
         <div class="w-full aspect-square lg:aspect-[4/1] bg-bleu-marine rounded-full lg:rounded-t-[8rem] lg:rounded-b-none shadow-[0_-10px_40px_rgba(0,0,0,0.1)]"></div>
-        <!-- Le Rectangle (S'étire à l'infini vers le bas, et démarre exactement au milieu du cercle via -mt-50%) -->
         <div class="w-full flex-grow bg-bleu-marine -mt-[50%] lg:-mt-[12%]"></div>
       </div>
 
-      <!-- COUCHE DE CONTENU (Au premier plan) -->
       <div class="relative z-10 w-full flex-grow flex flex-col items-center px-6 lg:px-12 max-w-[1400px] mx-auto pt-[12%] lg:pt-10 pb-24">
         
-        <!-- Bouton + -->
         <a href="/app/vestiaire/add" class="bg-jaune text-bleu-marine h-16 w-16 rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform active:scale-95 shrink-0 mb-4">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
           </svg>
         </a>
 
-        <!-- Titre -->
         <h1 class="text-3xl lg:text-5xl font-black text-white font-display tracking-wide uppercase text-center">Vestiaire</h1>
         <p class="text-bleu-claire text-sm lg:text-base font-medium mt-1 text-center mb-6 lg:mb-8">Gérez vos pièces et trouvez l'inspiration.</p>
 
-        <!-- Barre de Recherche -->
         <div class="mb-6 relative group w-full max-w-md mx-auto">
           <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
             <svg class="h-6 w-6 text-gray-400 group-focus-within:text-bleu-marine transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -48,7 +38,6 @@ import AppLayout from '../../../layouts/AppLayout.astro';
 
         <div class="w-full flex flex-col">
           
-          <!-- Filtres Catégories (flex-wrap pour passer à la ligne sur mobile, justify-center pour centrer) -->
           <div class="flex gap-2 lg:gap-3 flex-wrap justify-center mb-8 w-full">
             <button data-category="Tous" class="filter-btn bg-jaune text-bleu-marine px-6 lg:px-7 py-2.5 lg:py-3 rounded-full font-extrabold text-sm whitespace-nowrap shadow-md transition-all hover:scale-105 active:scale-95">Tous</button>
             <button data-category="haut" class="filter-btn bg-white/10 text-white border border-white/20 px-6 lg:px-7 py-2.5 lg:py-3 rounded-full font-bold text-sm whitespace-nowrap transition-all hover:scale-105 active:scale-95">Hauts</button>
@@ -58,18 +47,15 @@ import AppLayout from '../../../layouts/AppLayout.astro';
             <button data-category="une_piece" class="filter-btn bg-white/10 text-white border border-white/20 px-6 lg:px-7 py-2.5 lg:py-3 rounded-full font-bold text-sm whitespace-nowrap transition-all hover:scale-105 active:scale-95">une piece</button>
           </div>
 
-          <!-- Chargement -->
           <div id="loading-state" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6 mt-2">
             {[1, 2, 3, 4, 5, 6].map(() => (
               <div class="bg-white/10 backdrop-blur-sm rounded-[2rem] aspect-[3/4] animate-pulse"></div>
             ))}
           </div>
 
-          <!-- Grille des Vêtements -->
           <div id="clothes-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6 mt-2 hidden">
           </div>
 
-          <!-- État vide (Aucun résultat) -->
           <div id="empty-state" class="hidden flex-col items-center justify-center text-center py-20 px-6 bg-white/5 rounded-[3rem] border border-white/10 mt-6">
             <div class="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mb-6">
               <span class="text-4xl">🔍</span>
@@ -160,8 +146,9 @@ import AppLayout from '../../../layouts/AppLayout.astro';
         // @ts-ignore
         const wEmoji = weatherEmojis[record.weather_tag] || '☁️';
 
+        // Ligne modifiée ici pour l'URL statique compatible Netlify Drop
         const cardHtml = `
-          <a href="/app/vestiaire/${record.id}" class="bg-white rounded-[2rem] p-3 flex flex-col gap-3 relative group cursor-pointer hover:-translate-y-1 transition-all duration-300">
+          <a href="/app/vestiaire/detail?id=${record.id}" class="bg-white rounded-[2rem] p-3 flex flex-col gap-3 relative group cursor-pointer hover:-translate-y-1 transition-all duration-300">
             <div class="w-full aspect-square rounded-[1.5rem] overflow-hidden bg-gray-50 relative flex items-center justify-center">
               ${favBadge}
               <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg shadow-sm z-10 text-[10px] font-black uppercase text-gray-500 tracking-wider">
@@ -191,13 +178,13 @@ import AppLayout from '../../../layouts/AppLayout.astro';
       // @ts-ignore
       const category = target.dataset.category;
 
-      // Reset tous les boutons (style inactif sombre)
+      // Reset tous les boutons
       filterBtns.forEach(b => {
         b.classList.remove('bg-jaune', 'text-bleu-marine');
         b.classList.add('bg-white/10', 'text-white', 'border', 'border-white/20');
       });
       
-      // Activer le bouton cliqué (style actif jaune)
+      // Activer le bouton cliqué
       // @ts-ignore
       target.classList.remove('bg-white/10', 'text-white', 'border', 'border-white/20');
       // @ts-ignore

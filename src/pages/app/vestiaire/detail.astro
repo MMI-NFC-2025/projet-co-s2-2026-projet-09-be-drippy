@@ -1,8 +1,6 @@
 ---
-/* src/pages/app/vestiaire/[id].astro */
+/* src/pages/app/vestiaire/detail.astro */
 import AppLayout from '../../../layouts/AppLayout.astro';
-
-export const prerender = false;
 ---
 
 <AppLayout title="Détail du vêtement">
@@ -50,8 +48,9 @@ export const prerender = false;
     window.location.href = '/app/login';
   }
 
-  const urlParts = window.location.pathname.split('/');
-  const clothId = urlParts[urlParts.length - 1];
+  // Correction ici : on récupère l'ID proprement via les paramètres de recherche (?id=...)
+  const urlParams = new URLSearchParams(window.location.search);
+  const clothId = urlParams.get('id');
 
   const loading = document.getElementById('loading-state');
   const errorState = document.getElementById('error-state');
@@ -72,17 +71,16 @@ export const prerender = false;
       document.getElementById('cloth-category').textContent = record.category || 'Général';
 
       const imageUrl = getClothImageUrl(record);
-      // Correction du type TS
-      const imgEl = document.getElementById('cloth-image');
+      const imgEl = document.getElementById('cloth-image') as HTMLImageElement;
       const noImgEl = document.getElementById('no-image-text');
       
       if (imageUrl && imgEl) {
         imgEl.src = imageUrl;
         imgEl.style.display = 'block';
-        noImgEl.style.display = 'none';
+        if (noImgEl) noImgEl.style.display = 'none';
       } else if (imgEl) {
         imgEl.style.display = 'none';
-        noImgEl.style.display = 'block';
+        if (noImgEl) noImgEl.style.display = 'block';
       }
 
     } catch (error) {
@@ -96,7 +94,7 @@ export const prerender = false;
     const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cette pièce ? L'action est irréversible.");
     if (confirmation) {
       try {
-        await deleteCloth(clothId);
+        await deleteCloth(clothId!);
         window.location.href = '/app/vestiaire';
       } catch (error) {
         console.error("Erreur lors de la suppression :", error);

@@ -1,9 +1,5 @@
-
 import PocketBase from 'pocketbase';
-const PB_URL = 'http://127.0.0.1:8090';
-
-export const pb = new PocketBase(PB_URL);
-
+export const pb = new PocketBase('https://bedrippy.perruchot.optimiseus.fr');
 
 export async function getPbAuth(request) {
     pb.authStore.loadFromCookie(request.headers.get('cookie') || '');
