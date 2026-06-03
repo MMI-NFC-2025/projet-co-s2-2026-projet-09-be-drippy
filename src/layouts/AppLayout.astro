@@ -1,0 +1,58 @@
+---
+import '../styles/global.css';
+import AppHeader from '../components/app/AppHeader.astro';
+import AppFooter from '../components/app/AppFooter.astro'; 
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+
+// On vérifie si le chemin actuel correspond à l'une des pages d'authentification ou d'onboarding
+const pathna = Astro.url.pathname;
+const pathname = Astro.url.pathname;
+const isAuthPage = 
+  pathname.includes('/app/login') || 
+  pathname.includes('/app/register') || 
+  pathname.includes('/app/auth') ||
+  pathname.includes('/app/onboarding');
+
+const isAuthPagefooter = 
+  pathna.includes('/app/login') || 
+  pathna.includes('/app/register') || 
+  pathna.includes('/app/auth') ||
+  pathna.includes('/app/onboarding');
+
+
+
+---
+
+<!doctype html>
+<html lang="fr" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="L'application Be Drippy pour gérer vos tenues quotidiennes." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} - Be Drippy</title>
+  </head>
+  
+  <body class="bg-gray-50 text-bleu-marine min-h-screen flex flex-col relative overflow-x-hidden">
+    
+    <!-- Navigation fixée en haut : N'apparaît que si ce n'est PAS une page d'auth ni onboarding -->
+    {!isAuthPage && <AppHeader />}
+
+    <!-- Contenu principal -->
+    <!-- On gère l'espace en haut (pt-32) pour le header, et on le retire sur les pages d'auth (pt-0) -->
+    <main class={`flex-grow w-full overflow-hidden ${isAuthPage ? 'pt-0' : 'pt-32'}`}>
+      <div class="w-full"> 
+        <slot />
+      </div>
+    </main>
+    
+    {!isAuthPagefooter && <AppFooter />}
+    
+  </body>
+</html>
