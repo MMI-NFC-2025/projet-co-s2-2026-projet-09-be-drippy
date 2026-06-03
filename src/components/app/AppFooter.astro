@@ -1,0 +1,49 @@
+---
+/* src/components/app/AppFooter.astro */
+const currentYear = new Date().getFullYear();
+const pathna = Astro.url.pathname;
+---
+
+<!-- 1. Suppression du mt-16, ajout d'un fond bleu-marine pour qu'il soit continu -->
+<footer class="w-full bg-bleu-marine text-white pt-12 pb-12 px-8 lg:px-16 relative z-50">
+  
+  <!-- 2. On retire le padding-top excessif sur mobile pour réduire l'espace -->
+  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8">
+    
+    <!-- Le reste du code reste IDENTIQUE à ce que tu as déjà -->
+    <div class="flex flex-col lg:col-span-1">
+      <h2 class="font-display font-black text-3xl lg:text-4xl leading-[1.1] tracking-wide">
+        L'intelligence artificielle<br />
+        au service de votre style<br />
+        quotidien.
+      </h2>
+    </div>
+
+    <nav class="flex flex-col gap-4 lg:col-span-1 lg:pl-16">
+      <a href="/app/profile" class="font-bold uppercase tracking-widest text-xl hover:text-jaune hover:translate-x-2 transition-all">Profil</a>
+      <a href="/app/vestiaire" class="font-bold uppercase tracking-widest text-xl hover:text-jaune hover:translate-x-2 transition-all">Vestiaire</a>
+      <a href="/app/meteo" class="font-bold uppercase tracking-widest text-xl hover:text-jaune hover:translate-x-2 transition-all">Météo</a>
+      <a href="/app/communaute" class="premium-link hidden font-bold uppercase tracking-widest text-xl hover:text-jaune hover:translate-x-2 transition-all">Communauté</a>
+      <a href="/app/parametre" class="font-bold uppercase tracking-widest text-xl hover:text-jaune hover:translate-x-2 transition-all">Reglages</a>
+    </nav>
+
+    <div class="flex flex-col gap-8 lg:col-span-1 lg:items-end lg:text-right justify-end">
+      <div class="flex items-center gap-6">
+        <!-- Tes SVG restent ici -->
+      </div>
+      <div class="text-base font-medium space-y-1 mt-2">
+        <p>contact@bedrippy.fr</p>
+        <p>&copy; {currentYear} Be Drippy</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Ton script reste le même
+  import { pb } from '../../../backend/pb.mjs';
+  const user = pb.authStore.model;
+  if (user && user.is_premium === true) {
+    document.querySelectorAll('.premium-link').forEach(link => link.classList.remove('hidden'));
+  }
+</script>

@@ -4,7 +4,6 @@ const pathname = Astro.url.pathname;
 ---
 <header class="absolute top-0 left-0 right-0 z-50 px-6 lg:px-12 pt-6 lg:pt-8 mx-auto w-full max-w-[1400px] pointer-events-none">
   
-  <!-- Conteneur principal (Sans la capsule : fond transparent, pas d'ombre, pas de bordure) -->
   <div id="main-header-container" class="flex items-center justify-between pointer-events-auto relative z-[70] transition-opacity duration-300">
     
     <div id="header-logo" class="flex-1 flex items-center z-[80]">
@@ -17,13 +16,15 @@ const pathname = Astro.url.pathname;
     <div id="header-content" class="hidden lg:flex flex-1 items-center justify-center transition-opacity duration-300">
         <nav class="flex justify-center items-center gap-8">
             <a href="/app/vestiaire" class={`font-display uppercase text-corp-md tracking-wider transition-colors whitespace-nowrap ${pathname === '/app/vestiaire' ? 'text-jaune' : 'text-white hover:text-jaune'}`}>Vestiaire</a>
-            <a href="/app/communaute" class={`font-display uppercase text-corp-md tracking-wider transition-colors whitespace-nowrap ${pathname === '/app/community' ? 'text-jaune' : 'text-white hover:text-jaune'}`}>Communauté</a>
+            
+            <!-- Lien masqué par défaut, affiché par le JS -->
+            <a href="/app/communaute" class={`premium-link hidden font-display uppercase text-corp-md tracking-wider transition-colors whitespace-nowrap ${pathname === '/app/communaute' ? 'text-jaune' : 'text-white hover:text-jaune'}`}>Communauté</a>
+            
             <a href="/app/profile" class={`font-display uppercase text-corp-md tracking-wider transition-colors whitespace-nowrap ${pathname === '/app/profile' ? 'text-jaune' : 'text-white hover:text-jaune'}`}>Profil</a>
-            <a href="/app/meteo" class={`font-display uppercase text-corp-md tracking-wider transition-colors whitespace-nowrap ${pathname === '/app/weather' ? 'text-jaune' : 'text-white hover:text-jaune'}`}>Météo</a>
-            <a href="/app/settings" class={`font-display uppercase text-corp-md tracking-wider transition-colors whitespace-nowrap ${pathname === '/app/settings' ? 'text-jaune' : 'text-white hover:text-jaune'}`}>Réglages</a>
+            <a href="/app/meteo" class={`font-display uppercase text-corp-md tracking-wider transition-colors whitespace-nowrap ${pathname === '/app/meteo' ? 'text-jaune' : 'text-white hover:text-jaune'}`}>Météo</a>
+            <a href="/app/parametre" class={`font-display uppercase text-corp-md tracking-wider transition-colors whitespace-nowrap ${pathname === '/app/parametre' ? 'text-jaune' : 'text-white hover:text-jaune'}`}>Réglages</a>
         </nav>
     </div>
-
 
     <!-- Menu Burger Mobile -->
     <button id="menu-toggle" class="lg:hidden flex flex-col justify-center items-end gap-1 h-10 w-15 pointer-events-auto z-[80]">
@@ -38,16 +39,31 @@ const pathname = Astro.url.pathname;
     <div class="flex flex-col items-center gap-6 pointer-events-auto">
       
       <a href="/app/vestiaire" class={`menu-link font-display text-3xl uppercase ${pathname === '/app/vestiaire' ? 'text-jaune' : 'text-white'}`}>Vestiaire</a>
-      <a href="/app/communaute" class={`menu-link font-display text-3xl uppercase ${pathname === '/app/community' ? 'text-jaune' : 'text-white'}`}>Communauté</a>
+      
+      <!-- Lien masqué par défaut -->
+      <a href="/app/communaute" class={`premium-link hidden menu-link font-display text-3xl uppercase ${pathname === '/app/communaute' ? 'text-jaune' : 'text-white'}`}>Communauté</a>
+      
       <a href="/app/profile" class={`menu-link font-display text-3xl uppercase ${pathname === '/app/profile' ? 'text-jaune' : 'text-white'}`}>Profil</a>
-      <a href="/app/meteo" class={`menu-link font-display text-3xl uppercase ${pathname === '/app/weather' ? 'text-jaune' : 'text-white'}`}>Météo</a>
-      <a href="/app/settings" class={`menu-link font-display text-3xl uppercase ${pathname === '/app/settings' ? 'text-jaune' : 'text-white'}`}>Réglages</a>
+      <a href="/app/meteo" class={`menu-link font-display text-3xl uppercase ${pathname === '/app/meteo' ? 'text-jaune' : 'text-white'}`}>Météo</a>
+      <a href="/app/parametre" class={`menu-link font-display text-3xl uppercase ${pathname === '/app/parametre' ? 'text-jaune' : 'text-white'}`}>Réglages</a>
       
       <div class="w-full h-[1px] bg-white/20 my-4 max-w-[200px]"></div>
+    </div>
   </div>
 </header>
 
 <script>
+  import { pb } from '../../../backend/pb.mjs';
+
+  // 1. GESTION DE L'AFFICHAGE PREMIUM
+  const user = pb.authStore.model;
+  if (user && user.is_premium === true) {
+    document.querySelectorAll('.premium-link').forEach(link => {
+      link.classList.remove('hidden');
+    });
+  }
+
+  // 2. GESTION DU MENU BURGER
   const btn = document.getElementById('menu-toggle');
   const overlay = document.getElementById('menu-overlay');
   const headerContent = document.getElementById('header-content');

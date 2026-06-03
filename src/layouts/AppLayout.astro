@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
-import AppHeader from '../components/app/AppHeader.astro'; // Import du nouveau composant Header
+import AppHeader from '../components/app/AppHeader.astro';
+import AppFooter from '../components/app/AppFooter.astro'; 
 
 interface Props {
   title: string;
@@ -9,12 +10,22 @@ interface Props {
 const { title } = Astro.props;
 
 // On vérifie si le chemin actuel correspond à l'une des pages d'authentification ou d'onboarding
+const pathna = Astro.url.pathname;
 const pathname = Astro.url.pathname;
 const isAuthPage = 
   pathname.includes('/app/login') || 
   pathname.includes('/app/register') || 
   pathname.includes('/app/auth') ||
   pathname.includes('/app/onboarding');
+
+const isAuthPagefooter = 
+  pathna.includes('/app/login') || 
+  pathna.includes('/app/register') || 
+  pathna.includes('/app/auth') ||
+  pathna.includes('/app/onboarding');
+
+
+
 ---
 
 <!doctype html>
@@ -35,11 +46,13 @@ const isAuthPage =
 
     <!-- Contenu principal -->
     <!-- On gère l'espace en haut (pt-32) pour le header, et on le retire sur les pages d'auth (pt-0) -->
-    <main class={`flex-grow w-full overflow-hidden ${isAuthPage ? 'pt-0' : 'pt-32'} pb-10`}>
+    <main class={`flex-grow w-full overflow-hidden ${isAuthPage ? 'pt-0' : 'pt-32'}`}>
       <div class="w-full"> 
         <slot />
       </div>
     </main>
+    
+    {!isAuthPagefooter && <AppFooter />}
     
   </body>
 </html>

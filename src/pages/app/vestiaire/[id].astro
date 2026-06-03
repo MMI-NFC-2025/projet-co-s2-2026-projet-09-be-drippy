@@ -2,7 +2,6 @@
 /* src/pages/app/vestiaire/[id].astro */
 import AppLayout from '../../../layouts/AppLayout.astro';
 
-// LIGNE MAGIQUE POUR AUTORISER LES ROUTES DYNAMIQUES
 export const prerender = false;
 ---
 
@@ -34,7 +33,7 @@ export const prerender = false;
         <h1 id="cloth-name" class="text-3xl lg:text-4xl font-black text-bleu-marine mb-1"></h1>
         <p id="cloth-brand" class="text-lg lg:text-xl text-gray-400 font-bold uppercase tracking-wider mb-8"></p>
         
-        <button id="delete-btn" class="w-full bg-red-50 text-red-500 hover:bg-red-500 hover:text-white font-extrabold text-lg py-4 rounded-full transition-all active:scale-95 border border-red-100">
+        <button id="delete-btn" class="w-full bg-red-50 text-rouge hover:bg-rouge hover:text-white font-extrabold text-lg py-4 rounded-full transition-all active:scale-95 border border-red-100">
           Supprimer ce vêtement
         </button>
       </div>

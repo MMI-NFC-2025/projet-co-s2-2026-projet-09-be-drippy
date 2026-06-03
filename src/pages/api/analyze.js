@@ -1,9 +1,8 @@
 /* src/pages/api/analyze.js */
-export const prerender = false; // Important : C'est une route dynamique serveur
+export const prerender = false;
 
 export async function POST({ request }) {
   try {
-    // 1. On récupère la photo et le nom envoyés par le formulaire
     const formData = await request.formData();
     const image = formData.get('image');
     const name = formData.get('name');
@@ -12,28 +11,59 @@ export async function POST({ request }) {
       return new Response(JSON.stringify({ error: "Image manquante" }), { status: 400 });
     }
 
-    // ----------------------------------------------------------------------
-    // 🤖 PLACEHOLDER POUR L'IA (OpenAI Vision, Gemini, etc.)
-    // C'est ici que nous mettrons le code pour envoyer l'image à l'IA.
-    // Pour l'instant, on simule une réponse intelligente basée sur le nom.
-    // ----------------------------------------------------------------------
+    const nameLower = name ? name.toString().toLowerCase() : "";
+
+    // ==========================================
+    // 🧠 LE CERVEAU DE L'APPLICATION (DICTIONNAIRES)
+    // ==========================================
+
+    const dictUnePiece = ['robe', 'combinaison', 'salopette', 'kimono', 'abaya', 'qamis', 'combishort', 'nuisette', 'ensemble', 'costume'];
+    const dictVeste = ['veste', 'manteau', 'doudoune', 'blouson', 'trench', 'parka', 'blazer', 'coupe-vent', 'k-way', 'gilet', 'cardigan', 'surchemise', 'bomber', 'poncho', 'saharienne', 'perfecto'];
+    const dictBas = ['pantalon', 'jean', 'short', 'jupe', 'legging', 'jogging', 'survêtement', 'bermuda', 'cargo', 'chino', 'pantacourt', 'cycliste'];
+    const dictChaussure = ['chaussure', 'sneaker', 'basket', 'botte', 'bottine', 'sandale', 'mocassin', 'escarpin', 'talon', 'tong', 'espadrille', 'derby', 'claquette', 'crocs'];
     
-    let detectedCategory = "haut"; // par défaut
-    let detectedWeather = "neutre"; // par défaut
+    // Ajout de sweat et hoodie dans froid
+    const dictFroid = ['manteau', 'doudoune', 'pull', 'sweat', 'hoodie', 'polaire', 'écharpe', 'bonnet', 'hiver', 'neige', 'ski', 'thermique', 'col roulé', 'laine', 'cachemire', 'fourrure', 'épais', 'gros', 'velours'];
+    const dictChaud = ['t-shirt', 'short', 'débardeur', 'été', 'plage', 'léger', 'lin', 'crop-top', 'tong', 'sandale', 'combishort', 'bermuda', 'maillot', 'soleil', 'sans manche'];
+    const dictPluie = ['imperméable', 'k-way', 'pluie', 'botte', 'waterproof', 'gore-tex', 'coupe-vent'];
 
-    const nameLower = name.toString().toLowerCase();
+    const containsAny = (text, words) => words.some(word => text.includes(word));
 
-    // Petite logique temporaire en attendant la vraie IA
-    if (nameLower.includes('veste') || nameLower.includes('manteau')) {
-      detectedCategory = "veste";
-      detectedWeather = "froid";
-    } else if (nameLower.includes('pantalon') || nameLower.includes('jean')) {
-      detectedCategory = "bas";
-    } else if (nameLower.includes('chaussure') || nameLower.includes('sneaker')) {
-      detectedCategory = "chaussure";
+    // ==========================================
+    // ⚙️ LOGIQUE D'ANALYSE
+    // ==========================================
+
+    let detectedCategory = "haut"; 
+    
+    if (containsAny(nameLower, dictUnePiece)) detectedCategory = "une_piece";
+    else if (containsAny(nameLower, dictVeste)) detectedCategory = "veste";
+    else if (containsAny(nameLower, dictBas)) detectedCategory = "bas";
+    else if (containsAny(nameLower, dictChaussure)) detectedCategory = "chaussure";
+
+    let detectedWeather = "neutre"; 
+    
+    // --- RÈGLE SPÉCIALE POUR LA CAPUCHE ---
+    if (nameLower.includes('capuche') || nameLower.includes('hoodie') || nameLower.includes('sweat')) {
+      // Si c'est un truc de pluie à capuche
+      if (containsAny(nameLower, dictPluie)) {
+        detectedWeather = "pluie";
+      } else {
+        // Sinon c'est un sweat classique pour le froid
+        detectedWeather = "froid";
+      }
+    } 
+    // Sinon, on applique la logique normale
+    else if (containsAny(nameLower, dictFroid)) detectedWeather = "froid";
+    else if (containsAny(nameLower, dictPluie)) detectedWeather = "pluie";
+    else if (containsAny(nameLower, dictChaud)) detectedWeather = "chaud";
+
+    // Règle spéciale robes/shorts d'été
+    if ((detectedCategory === "une_piece" || detectedCategory === "bas") && containsAny(nameLower, ['robe', 'jupe', 'short']) && detectedWeather === "neutre") {
+        if (!containsAny(nameLower, ['laine', 'hiver', 'velours', 'pull'])) {
+            detectedWeather = "chaud"; 
+        }
     }
 
-    // 2. On renvoie les tags trouvés au format JSON à notre page web
     return new Response(JSON.stringify({ 
       category: detectedCategory, 
       weather_tag: detectedWeather 
