@@ -33,7 +33,7 @@ import AppLayout from '../../../layouts/AppLayout.astro';
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </div>
-          <input type="text" id="search-input" placeholder="Rechercher (ex: nike, veste...)" class="w-full bg-white rounded-full py-3.5 pl-14 pr-6 text-bleu-marine font-bold focus:outline-none focus:ring-4 focus:ring-bleu-claire/50 shadow-inner transition-all text-base placeholder-gray-400">
+          <input type="text" id="search-input" placeholder="Rechercher (ex: teeshirt, veste...)" class="w-full bg-white rounded-full py-3.5 pl-14 pr-6 text-bleu-marine font-bold focus:outline-none focus:ring-4 focus:ring-bleu-claire/50 shadow-inner transition-all text-base placeholder-gray-400">
         </div>
 
         <div class="w-full flex flex-col">
@@ -90,7 +90,7 @@ import AppLayout from '../../../layouts/AppLayout.astro';
   const filterBtns = document.querySelectorAll('.filter-btn');
   const searchInput = document.getElementById('search-input');
 
-  let allLoadedClothes = [];
+  let allLoadedClothes: any[] = [];
 
   async function fetchClothes(category = 'Tous') {
     if (!grid || !loading || !emptyState) return;

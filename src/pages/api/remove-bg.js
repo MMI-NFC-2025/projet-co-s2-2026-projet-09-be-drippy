@@ -10,12 +10,12 @@ export async function POST({ request }) {
       return new Response(JSON.stringify({ error: "Image manquante" }), { status: 400 });
     }
 
-    // Préparation des données pour Remove.bg
+   
     const removeBgForm = new FormData();
     removeBgForm.append('image_file', image);
-    removeBgForm.append('size', 'auto'); // Pour optimiser la qualité
+    removeBgForm.append('size', 'auto'); 
 
-    // Appel à l'API de Remove.bg
+    
     const response = await fetch('https://api.remove.bg/v1.0/removebg', {
       method: 'POST',
       headers: {
@@ -28,10 +28,8 @@ export async function POST({ request }) {
       throw new Error("Erreur lors du détourage par Remove.bg");
     }
 
-    // Récupération de l'image détourée sous forme de données brutes
     const arrayBuffer = await response.arrayBuffer();
 
-    // On renvoie la nouvelle image directement au format PNG
     return new Response(arrayBuffer, {
       status: 200,
       headers: { 'Content-Type': 'image/png' }

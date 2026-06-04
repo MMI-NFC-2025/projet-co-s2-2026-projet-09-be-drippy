@@ -84,21 +84,18 @@ import AppLayout from '../../layouts/AppLayout.astro';
 
   if (form && errorMsg) {
     form.addEventListener('submit', async (e) => {
-      e.preventDefault(); // On empêche le rechargement de page qui fait planter Astro
-      errorMsg.classList.add('hidden'); // On cache l'erreur
+      e.preventDefault(); 
+      errorMsg.classList.add('hidden'); 
 
       const formData = new FormData(form);
       const email = formData.get('email')?.toString() || "";
       const password = formData.get('password')?.toString() || "";
 
       try {
-        // Connexion directe avec PocketBase
+        
         await pb.collection('users').authWithPassword(email, password);
-
-        // Si ça marche, on stocke un cookie pour que le serveur Astro sache qu'on est connecté (utile pour les pages sécurisées)
         document.cookie = pb.authStore.exportToCookie({ httpOnly: false, path: '/' });
 
-        // Redirection vers le tableau de bord !
         window.location.href = '/app/onboarding';
         
       } catch (err) {
