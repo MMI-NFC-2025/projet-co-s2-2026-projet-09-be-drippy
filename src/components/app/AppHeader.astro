@@ -12,12 +12,9 @@ const pathname = Astro.url.pathname;
       </a>
     </div>
 
-    <!-- Navigation Bureau -->
     <div id="header-content" class="hidden lg:flex flex-1 items-center justify-center transition-opacity duration-300">
         <nav class="flex justify-center items-center gap-8">
             <a href="/app/vestiaire" class={`font-display uppercase text-corp-md tracking-wider transition-colors whitespace-nowrap ${pathname === '/app/vestiaire' ? 'text-jaune' : 'text-white hover:text-jaune'}`}>Vestiaire</a>
-            
-            <!-- Lien masqué par défaut, affiché par le JS -->
             <a href="/app/communaute" class={`premium-link hidden font-display uppercase text-corp-md tracking-wider transition-colors whitespace-nowrap ${pathname === '/app/communaute' ? 'text-jaune' : 'text-white hover:text-jaune'}`}>Communauté</a>
             
             <a href="/app/profile" class={`font-display uppercase text-corp-md tracking-wider transition-colors whitespace-nowrap ${pathname === '/app/profile' ? 'text-jaune' : 'text-white hover:text-jaune'}`}>Profil</a>
@@ -26,7 +23,7 @@ const pathname = Astro.url.pathname;
         </nav>
     </div>
 
-    <!-- Menu Burger Mobile -->
+    
     <button id="menu-toggle" class="lg:hidden flex flex-col justify-center items-end gap-1 h-10 w-15 pointer-events-auto z-[80]">
       <span id="line1" class="block w-12 h-[4px] bg-white rounded-full transition-all duration-300"></span>
       <span id="line2" class="block w-12 h-[4px] bg-white rounded-full transition-all duration-300"></span>
@@ -34,13 +31,13 @@ const pathname = Astro.url.pathname;
     </button>
   </div>
 
-  <!-- Overlay Mobile Fullscreen -->
+  
   <div id="menu-overlay" class="fixed inset-0 bg-bleu-marine -translate-y-full transition-transform duration-500 ease-in-out z-[65] flex flex-col items-center justify-center gap-8 pointer-events-none">
     <div class="flex flex-col items-center gap-6 pointer-events-auto">
       
       <a href="/app/vestiaire" class={`menu-link font-display text-3xl uppercase ${pathname === '/app/vestiaire' ? 'text-jaune' : 'text-white'}`}>Vestiaire</a>
       
-      <!-- Lien masqué par défaut -->
+      
       <a href="/app/communaute" class={`premium-link hidden menu-link font-display text-3xl uppercase ${pathname === '/app/communaute' ? 'text-jaune' : 'text-white'}`}>Communauté</a>
       
       <a href="/app/profile" class={`menu-link font-display text-3xl uppercase ${pathname === '/app/profile' ? 'text-jaune' : 'text-white'}`}>Profil</a>
@@ -55,7 +52,7 @@ const pathname = Astro.url.pathname;
 <script>
   import { pb } from '../../../backend/pb.mjs';
 
-  // 1. GESTION DE L'AFFICHAGE PREMIUM
+ 
   const user = pb.authStore.model;
   if (user && user.is_premium === true) {
     document.querySelectorAll('.premium-link').forEach(link => {
@@ -63,7 +60,7 @@ const pathname = Astro.url.pathname;
     });
   }
 
-  // 2. GESTION DU MENU BURGER
+ 
   const btn = document.getElementById('menu-toggle');
   const overlay = document.getElementById('menu-overlay');
   const headerContent = document.getElementById('header-content');

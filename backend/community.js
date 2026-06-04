@@ -16,9 +16,8 @@ export function initCommunity() {
   const shareCaption = document.getElementById('share-caption');
   const btnSubmitShare = document.getElementById('btn-submit-share');
 
-  let currentTab = 'feed'; // 'feed' ou 'favs'
+  let currentTab = 'feed';
 
-  // Charge et affiche les posts depuis PocketBase
   async function loadPosts() {
     if (!feedContainer || !loadingEl) return;
     
@@ -28,9 +27,8 @@ export function initCommunity() {
     loadingEl.classList.add('flex');
 
     try {
-      // On récupère TOUS les posts pour le feed (assure-toi d'avoir débloqué les API Rules dans PocketBase !)
       const posts = await pb.collection('social_posts').getFullList({
-        sort: '-created', // Du plus récent au plus ancien
+        sort: '-created',
         expand: 'user,look.clothes,likes',
       });
 
@@ -54,15 +52,12 @@ export function initCommunity() {
         return;
       }
 
-      // Génération HTML de chaque Post
       postsToShow.forEach(post => {
         const author = post.expand?.user;
         const look = post.expand?.look;
         const clothes = look?.expand?.clothes || [];
         const isLiked = post.likes && post.likes.includes(user.id);
         const authorAvatar = author?.avatar ? pb.files.getUrl(author, author.avatar) : '';
-
-        // Miniatures des vêtements
         const clothesHtml = clothes.map(c => {
           const imgUrl = pb.files.getUrl(c, c.image);
           return `
@@ -108,7 +103,6 @@ export function initCommunity() {
         feedContainer.innerHTML += postHtml;
       });
 
-      // Actions sur les boutons "Like"
       document.querySelectorAll('.btn-like').forEach(btn => {
         btn.addEventListener('click', async (e) => {
           const button = e.currentTarget;
@@ -137,7 +131,7 @@ export function initCommunity() {
 
     } catch (err) {
       console.error("Erreur de chargement du feed", err);
-      loadingEl.innerHTML = `<p class="text-red-500 font-bold">Erreur de connexion avec la base de données. API Rules débloquées ?</p>`;
+      loadingEl.innerHTML = `<p class="text-rouge font-bold">Erreur de connexion avec la base de données. API Rules débloquées ?</p>`;
     }
   }
 
@@ -156,12 +150,11 @@ export function initCommunity() {
     loadPosts();
   });
 
-  // --- Gestion de la Modale de Publication ---
   btnOpenShare?.addEventListener('click', async () => {
     try {
-      // 1. VÉRIFICATION : 1 POST PAR JOUR MAXIMUM
+
       const today = new Date();
-      today.setUTCHours(0, 0, 0, 0); // On prend la date d'aujourd'hui à minuit
+      today.setUTCHours(0, 0, 0, 0);
       const startOfDayStr = today.toISOString().replace('T', ' ');
 
       const existingPostsToday = await pb.collection('social_posts').getFullList({
@@ -170,10 +163,8 @@ export function initCommunity() {
 
       if (existingPostsToday.length > 0) {
         alert("Vous avez déjà publié une tenue aujourd'hui ! Revenez demain pour partager votre prochain style.");
-        return; // On bloque l'ouverture de la modale
+        return;
       }
-
-      // 2. VÉRIFICATION : TENUE VALIDÉE AUJOURD'HUI ?
       const history = await pb.collection('outfit_history').getFullList({
         filter: `user = "${user.id}" && is_validated = true && created >= "${startOfDayStr}"`,
         sort: '-created',
@@ -185,7 +176,6 @@ export function initCommunity() {
         return;
       }
 
-      // Si tout est bon, on ouvre la modale
       shareModal?.classList.remove('hidden');
       shareModal?.classList.add('flex');
       shareCaption.focus();
@@ -209,14 +199,13 @@ export function initCommunity() {
     }
   });
 
-  // Action Finale : Publication dans PocketBase
+
   shareForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     btnSubmitShare.disabled = true;
     btnSubmitShare.innerHTML = '⏳ Publication...';
 
     try {
-      // On récupère la tenue validée AUJOURD'HUI
       const today = new Date();
       today.setUTCHours(0, 0, 0, 0);
       const startOfDayStr = today.toISOString().replace('T', ' ');
@@ -227,8 +216,6 @@ export function initCommunity() {
         limit: 1
       });
       const latestLookId = history[0].look;
-
-      // Création du post
       await pb.collection('social_posts').create({
         user: user.id,
         look: latestLookId,
@@ -252,6 +239,5 @@ export function initCommunity() {
     btnSubmitShare.disabled = false;
   });
 
-  // Chargement Initial
   loadPosts();
 }

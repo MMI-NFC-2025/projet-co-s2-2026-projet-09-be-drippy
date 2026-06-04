@@ -3,14 +3,14 @@ import { pb } from './pb.mjs';
 
 /**
  * Crée une nouvelle tenue (Look) dans PocketBase
- * @param {string} userId - L'ID de l'utilisateur
- * @param {Array} clothesIds - Un tableau contenant les IDs des vêtements choisis
+ * @param {string} 
+ * @param {Array} 
  */
 export async function createLook(userId, clothesIds) {
   try {
     const record = await pb.collection('looks').create({
       user: userId,
-      clothes: clothesIds, // ⚠️ Assure-toi que ta colonne s'appelle bien "clothes" dans PocketBase (type Relation vers "clothes", et coche "Max select: Multiple")
+      clothes: clothesIds,
     });
     return record;
   } catch (error) {

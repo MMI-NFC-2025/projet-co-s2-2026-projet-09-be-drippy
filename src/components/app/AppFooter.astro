@@ -4,13 +4,9 @@ const currentYear = new Date().getFullYear();
 const pathna = Astro.url.pathname;
 ---
 
-<!-- 1. Suppression du mt-16, ajout d'un fond bleu-marine pour qu'il soit continu -->
 <footer class="w-full bg-bleu-marine text-white pt-12 pb-12 px-8 lg:px-16 relative z-50">
-  
-  <!-- 2. On retire le padding-top excessif sur mobile pour réduire l'espace -->
   <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8">
     
-    <!-- Le reste du code reste IDENTIQUE à ce que tu as déjà -->
     <div class="flex flex-col lg:col-span-1">
       <h2 class="font-display font-black text-3xl lg:text-4xl leading-[1.1] tracking-wide">
         L'intelligence artificielle<br />
@@ -29,7 +25,6 @@ const pathna = Astro.url.pathname;
 
     <div class="flex flex-col gap-8 lg:col-span-1 lg:items-end lg:text-right justify-end">
       <div class="flex items-center gap-6">
-        <!-- Tes SVG restent ici -->
       </div>
       <div class="text-base font-medium space-y-1 mt-2">
         <p>contact@bedrippy.fr</p>
@@ -40,7 +35,6 @@ const pathna = Astro.url.pathname;
 </footer>
 
 <script>
-  // Ton script reste le même
   import { pb } from '../../../backend/pb.mjs';
   const user = pb.authStore.model;
   if (user && user.is_premium === true) {

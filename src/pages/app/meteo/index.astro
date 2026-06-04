@@ -115,13 +115,11 @@ import AppLayout from '../../../layouts/AppLayout.astro';
     window.location.href = '/app/login';
   }
 
-  // Éléments d'états
   const loadingState = document.getElementById('loading-state');
   const errorState = document.getElementById('error-state');
   const errorText = document.getElementById('error-text');
   const weatherContent = document.getElementById('weather-content');
 
-  // Éléments de données météo
   const elCity = document.getElementById('city-name');
   const elIcon = document.getElementById('current-icon');
   const elIconSvg = document.getElementById('current-icon-svg');
@@ -130,21 +128,17 @@ import AppLayout from '../../../layouts/AppLayout.astro';
   const elWind = document.getElementById('wind');
   const elHumidity = document.getElementById('humidity');
 
-  // Éléments d'édition de la ville (dans la carte)
   const cityDisplayContainer = document.getElementById('city-display-container');
   const editCityBtn = document.getElementById('edit-city-btn');
   const editCityForm = document.getElementById('edit-city-form');
   const editCityInput = document.getElementById('edit-city-input') as HTMLInputElement;
 
-  // Éléments d'édition de la ville (dans l'erreur)
   const errorCityForm = document.getElementById('error-city-form');
   const errorCityInput = document.getElementById('error-city-input') as HTMLInputElement;
 
-  // Dictionnaire simple pour convertir ton Emoji en icône vectorielle
   function updateWeatherSvg(emoji: string) {
     if (!elIconSvg) return;
     
-    // Nuage par défaut
     let svgPath = "M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z";
     
     if (emoji === "☀️") {
@@ -160,9 +154,7 @@ import AppLayout from '../../../layouts/AppLayout.astro';
     elIconSvg.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" d="${svgPath}" />`;
   }
 
-  // Fonction principale de chargement
   async function initWeather() {
-    // Reset de l'affichage
     errorState?.classList.add('hidden');
     errorState?.classList.remove('flex');
     weatherContent?.classList.add('hidden');
@@ -198,20 +190,19 @@ import AppLayout from '../../../layouts/AppLayout.astro';
     }
   }
 
-  // Fonction pour mettre à jour la ville dans PocketBase
   async function updateCity(newCity: string) {
     if (!newCity || newCity.trim() === '') return;
     
     try {
       const userId = pb.authStore.model?.id;
-      // Mise à jour en base de données
+      if (!userId) {
+        throw new Error("Utilisateur non connecté");
+      }
       await pb.collection('users').update(userId, { city: newCity.trim() });
       
-      // Rafraîchissement des cookies et du store local
       await pb.collection('users').authRefresh();
       document.cookie = pb.authStore.exportToCookie({ httpOnly: false, path: '/' });
 
-      // On recharge la météo
       initWeather();
     } catch (err) {
       console.error("Erreur de mise à jour de la ville :", err);
@@ -219,7 +210,7 @@ import AppLayout from '../../../layouts/AppLayout.astro';
     }
   }
 
-  // --- Écouteurs d'événements pour l'édition dans la carte ---
+
   editCityBtn?.addEventListener('click', () => {
     cityDisplayContainer?.classList.add('hidden');
     cityDisplayContainer?.classList.remove('flex');
@@ -235,7 +226,6 @@ import AppLayout from '../../../layouts/AppLayout.astro';
     e.preventDefault();
     const newCity = editCityInput?.value;
     
-    // On remet l'affichage normal
     editCityForm.classList.add('hidden');
     editCityForm.classList.remove('flex');
     cityDisplayContainer?.classList.remove('hidden');
@@ -244,13 +234,12 @@ import AppLayout from '../../../layouts/AppLayout.astro';
     if (newCity) updateCity(newCity);
   });
 
-  // --- Écouteurs d'événements pour l'édition depuis l'état d'erreur ---
+
   errorCityForm?.addEventListener('submit', (e) => {
     e.preventDefault();
     const newCity = errorCityInput?.value;
     if (newCity) updateCity(newCity);
   });
 
-  // Démarrage initial
   initWeather();
 </script>

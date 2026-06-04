@@ -48,7 +48,7 @@ import AppLayout from '../../../layouts/AppLayout.astro';
     window.location.href = '/app/login';
   }
 
-  // Correction ici : on récupère l'ID proprement via les paramètres de recherche (?id=...)
+
   const urlParams = new URLSearchParams(window.location.search);
   const clothId = urlParams.get('id');
 
@@ -66,9 +66,13 @@ import AppLayout from '../../../layouts/AppLayout.astro';
       loading.style.display = 'none';
       detailsContainer.style.display = 'block';
 
-      document.getElementById('cloth-name').textContent = record.name || 'Sans nom';
-      document.getElementById('cloth-brand').textContent = record.brand || '-';
-      document.getElementById('cloth-category').textContent = record.category || 'Général';
+     const nameEl = document.getElementById('cloth-name');
+      const brandEl = document.getElementById('cloth-brand');
+      const categoryEl = document.getElementById('cloth-category');
+
+      if (nameEl) nameEl.textContent = record.name || 'Sans nom';
+      if (brandEl) brandEl.textContent = record.brand || '-';
+      if (categoryEl) categoryEl.textContent = record.category || 'Général';
 
       const imageUrl = getClothImageUrl(record);
       const imgEl = document.getElementById('cloth-image') as HTMLImageElement;

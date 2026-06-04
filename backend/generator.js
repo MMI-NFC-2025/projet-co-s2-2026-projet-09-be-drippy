@@ -2,7 +2,7 @@
 import { pb } from './pb.mjs';
 import { getClothes, getClothImageUrl } from './clothes.js';
 import { createLook } from './looks.js';
-import { getWeather } from './weather.js'; // <-- Ajout de l'import météo
+import { getWeather } from './weather.js';
 
 export function initGenerator(onOutfitValidated) {
   const user = pb.authStore.model;
@@ -19,7 +19,7 @@ export function initGenerator(onOutfitValidated) {
   const btnRandom = document.getElementById('btn-random');
   const btnValidate = document.getElementById('btn-validate');
 
-  // UNIFICATION : On utilise 'une_piece' partout pour éviter les bugs de clés
+
   let clothes = { haut: [], bas: [], une_piece: [], veste: [], chaussure: [] };
   let currentIndices = { haut: 0, bas: 0, une_piece: 0, veste: 0, chaussure: 0 };
   let config = { mode: 'standard', withVeste: false };
@@ -28,9 +28,7 @@ export function initGenerator(onOutfitValidated) {
     try {
       const allClothes = await getClothes(user?.id, 'Tous');
       
-      // ==========================================
-      // ☁️ FILTRAGE MÉTÉO INTELLIGENT
-      // ==========================================
+
       let filteredClothes = allClothes;
       
       try {
@@ -45,17 +43,11 @@ export function initGenerator(onOutfitValidated) {
           const tag = cloth.weather_tag;
           const cat = cloth.category?.toLowerCase() || '';
 
-          // Règle 1 : S'il fait chaud (> 22°C), on enlève les vêtements d'hiver
-          if (temp >= 22 && tag === 'froid') return false;
-
-          // Règle 2 : S'il fait froid (< 15°C), on enlève les bas/robes d'été 
-          // (Mais on garde les t-shirts car on peut les superposer sous une veste)
+          if (temp >= 20 && tag === 'froid') return false;
           if (temp < 15 && tag === 'chaud' && (cat.includes('bas') || cat.includes('robe') || cat.includes('une_piece'))) return false;
 
-          // Règle 3 : S'il pleut, on exclut les chaussures taguées "chaud" (comme les sandales)
           if (isRaining && cat.includes('chaussure') && tag === 'chaud') return false;
 
-          // Le vêtement a passé les tests, on le garde
           return true;
         });
       } catch (weatherErr) {
@@ -65,7 +57,6 @@ export function initGenerator(onOutfitValidated) {
 
       clothes = { haut: [], bas: [], une_piece: [], veste: [], chaussure: [] };
       
-      // On trie les vêtements FILTRÉS
       filteredClothes.forEach((item) => {
         const cat = item.category?.toLowerCase() || '';
         if (cat.includes('haut')) clothes.haut.push(item);
@@ -203,7 +194,6 @@ export function initGenerator(onOutfitValidated) {
           if (clothes.haut.length > 0) selectedClothesIds.push(clothes.haut[currentIndices.haut].id);
           if (clothes.bas.length > 0) selectedClothesIds.push(clothes.bas[currentIndices.bas].id);
         } else {
-          // Correction du bug d'enregistrement de la robe
           if (clothes.une_piece.length > 0) selectedClothesIds.push(clothes.une_piece[currentIndices.une_piece].id);
         }
 
