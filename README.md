@@ -4,8 +4,8 @@
 Éléménts à renseigner pour la soutenance :
 
 - [ ] Nom du projet : Be Drippy
-- [ ] URL de la landing page : 
-- [ ] URL de l'application finale :
+- [ ] URL de la landing page : http://be-drippy.tperruchot.fr
+- [ ] URL de l'application finale : http://be-drippy.tperruchot.fr/app/profile
 - [ ] URL de connexion au back office : https://bedrippy.perruchot.optimiseus.fr/_/
 - [ ] Identifiant de connexion au backoffice : thomas.perruchot@edu.univ-fcomte.fr
 - [ ] Mot de passe de connexion au backoffice : Thomas23*
