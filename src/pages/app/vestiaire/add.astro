@@ -79,14 +79,70 @@ export const prerender = false;
   }
 
   const form = document.getElementById('add-cloth-form');
-  const imageInput = document.getElementById('image');
-  const imagePreview = document.getElementById('image-preview');
+  const imageInput = document.getElementById('image') as HTMLInputElement;
+  const imagePreview = document.getElementById('image-preview') as HTMLImageElement;
   const uploadPlaceholder = document.getElementById('upload-placeholder');
-  const submitBtn = document.getElementById('submit-btn');
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
   const aiOverlay = document.getElementById('ai-loading-overlay');
   const errorMessage = document.getElementById('error-message');
   const overlayText = aiOverlay?.querySelector('h3'); 
 
+  // --- NOUVELLE FONCTION DE COMPRESSION ---
+  async function compressImage(file: File, maxWidth = 1000, maxHeight = 1000, quality = 0.8): Promise<File> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event?.target?.result as string;
+        img.onload = () => {
+          let width = img.width;
+          let height = img.height;
+
+          // Calcul des nouvelles dimensions en gardant les proportions
+          if (width > height) {
+            if (width > maxWidth) {
+              height = Math.round((height *= maxWidth / width));
+              width = maxWidth;
+            }
+          } else {
+            if (height > maxHeight) {
+              width = Math.round((width *= maxHeight / height));
+              height = maxHeight;
+            }
+          }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          if (!ctx) return reject(new Error('Erreur de canvas'));
+          
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Conversion du canvas en nouveau fichier compressé
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                const compressedFile = new File([blob], file.name, {
+                  type: 'image/jpeg',
+                  lastModified: Date.now(),
+                });
+                resolve(compressedFile);
+              } else {
+                reject(new Error('Erreur de compression'));
+              }
+            },
+            'image/jpeg',
+            quality
+          );
+        };
+        img.onerror = (error) => reject(error);
+      };
+      reader.onerror = (error) => reject(error);
+    });
+  }
+  // ----------------------------------------
 
   imageInput?.addEventListener('change', function(e) {
     // @ts-ignore
@@ -108,7 +164,6 @@ export const prerender = false;
     
     if (!submitBtn || !aiOverlay || !errorMessage || !overlayText) return;
 
-    // @ts-ignore
     submitBtn.disabled = true;
     aiOverlay.classList.remove('hidden');
     aiOverlay.classList.add('flex');
@@ -119,6 +174,16 @@ export const prerender = false;
       const formData = new FormData(form);
       const userId = pb.authStore.model?.id || '';
       formData.append('user', userId);
+
+      // --- COMPRESSION AVANT ENVOI ---
+      const originalFile = imageInput.files?.[0];
+      if (originalFile) {
+        overlayText.textContent = "📦 Compression de l'image...";
+        const compressedFile = await compressImage(originalFile);
+        // On remplace la grosse image par la petite compressée dans les données
+        formData.set('image', compressedFile);
+      }
+      // -------------------------------
 
       overlayText.textContent = "✂️ Détourage en cours...";
       const removeBgResponse = await fetch('/api/remove-bg', {
@@ -133,7 +198,6 @@ export const prerender = false;
 
       formData.set('image', croppedFile);
       
-      // @ts-ignore
       imagePreview.src = URL.createObjectURL(croppedFile);
 
       overlayText.textContent = "✨ Analyse IA de la pièce...";
@@ -157,7 +221,6 @@ export const prerender = false;
       console.error("Erreur générale :", error);
       errorMessage.textContent = "Une erreur est survenue (vérifiez votre connexion ou l'image).";
       errorMessage.classList.remove('hidden');
-      // @ts-ignore
       submitBtn.disabled = false;
       aiOverlay.classList.add('hidden');
       aiOverlay.classList.remove('flex');
